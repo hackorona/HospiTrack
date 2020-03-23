@@ -26,7 +26,7 @@ class ExampleScreen extends React.Component {
     this._fetchWifiList();
   }
 
-  _fetchWifiList() {
+  _fetchWifiList = () => {
     this.props.fetchWifiList()
   }
   
