@@ -27,7 +27,7 @@ export default class App extends Component {
     
     if (granted === PermissionsAndroid.RESULTS.GRANTED) {
         // You can now use react-native-wifi-reborn
-        alert('Yay thank you!')
+        console.log('Yay thank you!')
     } else {
         // Permission denied
         alert('Oh no... Now I cry')
