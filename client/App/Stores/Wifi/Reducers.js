@@ -1,0 +1,38 @@
+/**
+ * Reducers specify how the application's state changes in response to actions sent to the store.
+ *
+ * @see https://redux.js.org/basics/reducers
+ */
+
+import { INITIAL_STATE } from './InitialState'
+import { createReducer } from 'reduxsauce'
+import { WifiTypes } from './Actions'
+
+export const fetchWifiListLoading = (state) => ({
+  ...state,
+  wifiListIsLoading: true,
+  wifiListErrorMessage: null,
+})
+
+export const fetchWifiListSuccess = (state, payload) => ({
+  ...state,
+  wifiList: payload.wifiArr,
+  wifiListIsLoading: false || console.log('payload ?', payload),
+  wifiListErrorMessage: null,
+})
+
+export const fetchWifiListFailure = (state, { errorMessage }) => ({
+  ...state,
+  wifiList: {},
+  wifiListIsLoading: false,
+  wifiListErrorMessage: errorMessage,
+})
+
+/**
+ * @see https://github.com/infinitered/reduxsauce#createreducer
+ */
+export const reducer = createReducer(INITIAL_STATE, {
+  [WifiTypes.FETCH_WIFI_LIST_LOADING]: fetchWifiListLoading,
+  [WifiTypes.FETCH_WIFI_LIST_SUCCESS]: fetchWifiListSuccess,
+  [WifiTypes.FETCH_WIFI_LIST_FAILURE]: fetchWifiListFailure,
+})

@@ -1,8 +1,9 @@
 import React from 'react'
-import { Platform, Text, View, Button, ActivityIndicator, Image } from 'react-native'
+import { TouchableOpacity, Platform, Text, View, Button, ActivityIndicator, Image } from 'react-native'
 import { connect } from 'react-redux'
 import { PropTypes } from 'prop-types'
 import ExampleActions from 'App/Stores/Example/Actions'
+import WifiActions from 'App/Stores/Wifi/Actions'
 import { liveInEurope } from 'App/Stores/Example/Selectors'
 import Style from './ExampleScreenStyle'
 import { ApplicationStyles, Helpers, Images, Metrics } from 'App/Theme'
@@ -21,10 +22,17 @@ const instructions = Platform.select({
 
 class ExampleScreen extends React.Component {
   componentDidMount() {
+    console.log('componentDidMount');
     this._fetchUser()
+    this._fetchWifiList();
+  }
+
+  _fetchWifiList() {
+    this.props.fetchWifiList()
   }
 
   render() {
+    console.log('this.props.wifiList ?', this.props.wifiList);
     return (
       <View
         style={[
@@ -34,33 +42,24 @@ class ExampleScreen extends React.Component {
           Metrics.mediumVerticalMargin,
         ]}
       >
-        {this.props.userIsLoading ? (
+        {this.props.wifiIsLoading ? (
           <ActivityIndicator size="large" color="#0000ff" />
         ) : (
           <View>
-            <View style={Style.logoContainer}>
-              <Image style={Helpers.fullSize} source={Images.logo} resizeMode={'contain'} />
-            </View>
-            <Text style={Style.text}>To get started, edit App.js</Text>
-            <Text style={Style.instructions}>{instructions}</Text>
-            {this.props.userErrorMessage ? (
-              <Text style={Style.error}>{this.props.userErrorMessage}</Text>
+            <TouchableOpacity onPress={this.fetchWifi}>
+              <View style={Style.logoContainer}>
+                <Image style={Helpers.fullSize} source={Images.logo} resizeMode={'contain'} />
+              </View>
+            </TouchableOpacity>
+            {this.props.wifiErrorMessage ? (
+              <Text style={Style.error}>{this.props.wifiErrorMessage}</Text>
             ) : (
               <View>
                 <Text style={Style.result}>
-                  {"I'm a fake user, my name is "}
-                  {this.props.user.name}
-                </Text>
-                <Text style={Style.result}>
-                  {this.props.liveInEurope ? 'I live in Europe !' : "I don't live in Europe."}
+                  {JSON.stringify(this.props.wifiList)}
                 </Text>
               </View>
             )}
-            <Button
-              style={ApplicationStyles.button}
-              onPress={() => this._fetchUser()}
-              title="Refresh"
-            />
           </View>
         )}
       </View>
@@ -77,6 +76,7 @@ ExampleScreen.propTypes = {
   userIsLoading: PropTypes.bool,
   userErrorMessage: PropTypes.string,
   fetchUser: PropTypes.func,
+  fetchWifiList: PropTypes.func,
   liveInEurope: PropTypes.bool,
 }
 
@@ -85,10 +85,14 @@ const mapStateToProps = (state) => ({
   userIsLoading: state.example.userIsLoading,
   userErrorMessage: state.example.userErrorMessage,
   liveInEurope: liveInEurope(state),
+  wifiList: state.wifi.wifiList,
+  wifiIsLoading: state.wifi.wifiListIsLoading,
+  wifiErrorMessage: state.wifi.wifiListErrorMessage,
 })
 
 const mapDispatchToProps = (dispatch) => ({
   fetchUser: () => dispatch(ExampleActions.fetchUser()),
+  fetchWifiList: () => dispatch(WifiActions.fetchWifiList())
 })
 
 export default connect(
