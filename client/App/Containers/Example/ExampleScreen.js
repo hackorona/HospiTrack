@@ -22,7 +22,6 @@ const instructions = Platform.select({
 
 class ExampleScreen extends React.Component {
   componentDidMount() {
-    console.log('componentDidMount');
     this._fetchUser()
     this._fetchWifiList();
   }
@@ -30,9 +29,17 @@ class ExampleScreen extends React.Component {
   _fetchWifiList() {
     this.props.fetchWifiList()
   }
+  
+  componentDidUpdate(prevProps) {
+    const {wifiList} = this.props;
+    const {wifiList: prevWifiList} = prevProps;
+    
+    if (JSON.stringify(wifiList) != JSON.stringify(prevWifiList)) {
+      console.log('wifiList ?', wifiList);
+    }
+  }
 
   render() {
-    console.log('this.props.wifiList ?', this.props.wifiList);
     return (
       <View
         style={[
@@ -46,7 +53,7 @@ class ExampleScreen extends React.Component {
           <ActivityIndicator size="large" color="#0000ff" />
         ) : (
           <View>
-            <TouchableOpacity onPress={this.fetchWifi}>
+            <TouchableOpacity onPress={this._fetchWifiList}>
               <View style={Style.logoContainer}>
                 <Image style={Helpers.fullSize} source={Images.logo} resizeMode={'contain'} />
               </View>
@@ -55,9 +62,13 @@ class ExampleScreen extends React.Component {
               <Text style={Style.error}>{this.props.wifiErrorMessage}</Text>
             ) : (
               <View>
-                <Text style={Style.result}>
-                  {JSON.stringify(this.props.wifiList)}
-                </Text>
+              {
+                this.props.wifiList.map((net, i) => (
+                  <Text key={`net_${i}`} style={Style.result}>
+                    {i} - ssid: {net.SSID}, level: {net.level}
+                  </Text>
+                ))
+              }
               </View>
             )}
           </View>
