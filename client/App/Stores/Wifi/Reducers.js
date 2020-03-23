@@ -17,7 +17,7 @@ export const fetchWifiListLoading = (state) => ({
 export const fetchWifiListSuccess = (state, payload) => ({
   ...state,
   wifiList: payload.wifiArr,
-  wifiListIsLoading: false || console.log('payload ?', payload),
+  wifiListIsLoading: false,
   wifiListErrorMessage: null,
 })
 
