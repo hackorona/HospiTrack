@@ -1,11 +1,6 @@
-from app import app, engine
-from app.models.router_scans import RouterScans
-from sqlalchemy.orm import sessionmaker
-
+from app import app
+from app.controllers.router_scans import RouterScansController
 import time
-
-Session = sessionmaker(bind=engine)
-session = Session()
 
 @app.route('/api/insert-router-scan')
 def insert_router_scan():
@@ -26,7 +21,8 @@ def insert_router_scan():
                  'rssi': -70,
                  'bssid': 'rg:3t:4t:9t4i:4t'
                  }
-    new_router_scan = RouterScans(imei=mock_data['imei'],
+
+    new_router_scan = RouterScansController(imei=mock_data['imei'],
                            timestamp=mock_data['timestamp'],
                            longitude=mock_data['longitude'],
                            latitude=mock_data['latitude'],
@@ -35,7 +31,5 @@ def insert_router_scan():
                            rssi=mock_data['rssi'],
                            bssid=mock_data['bssid']
                            )
-    session.add(new_router_scan)
-    session.commit()
-
+    new_router_scan.insert()
     return "successfuly inserted data"
