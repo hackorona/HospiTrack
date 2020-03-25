@@ -7,6 +7,7 @@ import WifiActions from 'App/Stores/Wifi/Actions'
 import { liveInEurope } from 'App/Stores/Example/Selectors'
 import Style from './ExampleScreenStyle'
 import { ApplicationStyles, Helpers, Images, Metrics } from 'App/Theme'
+import NavigationService from '../../Services/NavigationService'
 
 /**
  * This is an example of a container component.
@@ -53,6 +54,8 @@ class ExampleScreen extends React.Component {
           <ActivityIndicator size="large" color="#0000ff" />
         ) : (
           <View>
+            {/* Temp... */}
+            <Button title="Start Flow" onPress={() => NavigationService.navigate('WizardScreen')}></Button>
             <TouchableOpacity onPress={this._fetchWifiList}>
               <View style={Style.logoContainer}>
                 <Image style={Helpers.fullSize} source={Images.logo} resizeMode={'contain'} />
