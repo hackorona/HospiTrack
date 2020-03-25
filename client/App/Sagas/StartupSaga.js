@@ -1,7 +1,7 @@
 import { put, call } from 'redux-saga/effects'
 import ExampleActions from 'App/Stores/Example/Actions'
 import NavigationService from 'App/Services/NavigationService'
-import { wifiService } from '../Services/WifiService';
+import { permissionsService } from '../Services/PermissionsService';
 
 /**
  * The startup saga is the place to define behavior to execute when the application starts.
@@ -15,7 +15,7 @@ export function* startup() {
   // ...
 
   // We check for location permissions granted.
-  const isPermissionsGranted = yield call(wifiService.askPermissions);
+  const isPermissionsGranted = yield call(permissionsService.askPermissions);
   
   // w/o location permissions, app is useless. go to NoPermissionsScreen
   // and beg user to grant permissions.
