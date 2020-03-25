@@ -1,30 +1,21 @@
 import React from 'react'
-import { TouchableOpacity, Platform, Text, View, Button, ActivityIndicator, Image } from 'react-native'
-import WifiActions from 'App/Stores/Wifi/Actions'
-import { Helpers, Metrics } from 'App/Theme'
+import { View } from 'react-native'
+import { Helpers } from 'App/Theme'
+import GrantPermissionBody from '../../Components/GrantPermissionBody'
+import GrantPermissionActions from '../../Components/GrantPermissionActions'
 
 class NoPermissionsScreen extends React.Component {
-  componentDidMount() {
-  }
-
   render() {
     return (
       <View
         style={[
-          Helpers.fill,
-          Helpers.rowMain,
-          Metrics.mediumHorizontalMargin,
-          Metrics.mediumVerticalMargin,
+          Helpers.fillColMain
         ]}
       >
-        {/* <NoPermissionMsg /> */}
-        <Text>Now we cry!</Text>
+        <GrantPermissionBody />
+        <GrantPermissionActions />
       </View>
     )
-  }
-
-  _fetchUser() {
-    this.props.fetchUser()
   }
 }
 
