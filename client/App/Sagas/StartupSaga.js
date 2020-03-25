@@ -1,18 +1,23 @@
 import { put, call, select } from 'redux-saga/effects'
-import ExampleActions from 'App/Stores/Example/Actions'
 import PermissionsActions from '../Stores/Permissions/Actions'
-import NavigationService from 'App/Services/NavigationService'
 import { permissionsService } from '../Services/PermissionsService';
+import NavigationService from '../Services/NavigationService'
+import { Platform } from 'react-native'
 
 /**
  * The startup saga is the place to define behavior to execute when the application starts.
  */
 export function* startup() {
-  // Dispatch a redux action using `put()`
-  // @see https://redux-saga.js.org/docs/basics/DispatchingActions.html
-  yield put(ExampleActions.fetchUser())
+  // We can see if android or ios!
+  const platformMsg = Platform.select({
+    ios: 'This is ios',
+    android: 'This is android',
+  });
+
+  console.log('platformMsg ?', platformMsg);
 
   // Add more operations you need to do at startup here
+  // Splash screen is shown till navigateAndReset is called ad end of this saga
   // ...
   yield put(PermissionsActions.permissionsRequest());
 
