@@ -3,6 +3,8 @@ import { Text, View, Image } from 'react-native'
 import { Helpers, Fonts, Images, Metrics } from '../Theme';
 
 export default function GrantPermissionBody(props) {
+  const { isBlocked } = props;
+  
   return (
     <View
       style={[
@@ -27,7 +29,12 @@ export default function GrantPermissionBody(props) {
           Helpers.textCenter,
           Metrics.horizontalPadding
         ]}>
-          Change permissions in your phone settings
+          {
+            isBlocked ?
+            `Change permissions in your phone settings `
+            :
+            `Press button to grant permissions `
+          }
           so we'll be able to track your route in the hospital!
         </Text>
       </View>

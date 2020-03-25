@@ -2,17 +2,21 @@ import React from 'react'
 import { View } from 'react-native'
 import { Helpers } from '../Theme';
 import FullWidthButton from './FullWidthButton';
-import { permissionsService } from '../Services/PermissionsService';
 
 export default function GrantPermissionActions(props) {
+  const { isBlocked, onExitClick, onSettingsClick, onRequestClick } = props;
+
   return (
     <View
       style={[Helpers.row]}
     >
       {/* This might look oppsite in hebrew devices.. */}
-      <FullWidthButton title="Exit" onPress={permissionsService.exitApp} />
-      {/* <FullWidthButton title="Try again" onPress={permissionsService.askPermissionsBlocked} /> */}
-      <FullWidthButton title="Settings..." onPress={permissionsService.openSettings} />
+      <FullWidthButton title="Exit" onPress={onExitClick} />
+      { 
+        isBlocked ?
+        <FullWidthButton title="Settings..." onPress={onSettingsClick} /> :
+        <FullWidthButton title="Ask Permissions..." onPress={onRequestClick} />        
+      }
     </View>
   );
 }
