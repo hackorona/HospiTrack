@@ -14,7 +14,12 @@ export function* startup() {
 
   // Add more operations you need to do at startup here
   // ...
+  yield put(PermissionsActions.permissionsRequest());
 
+  // App moves to main screen on permissions granted.
+}
+
+export function* permissionsRequest() {
   // We check for location permissions granted.
   const permissionsStatus = yield call(permissionsService.askPermissions);
 
@@ -25,8 +30,6 @@ export function* startup() {
   // and beg user to grant permissions.
   if (!permissionsStatus.granted)
     return NavigationService.navigateAndReset('NoPermissionsScreen')
-
-  // App moves to main screen on permissions granted.
 }
 
 export function* permissionsUpdate() {
