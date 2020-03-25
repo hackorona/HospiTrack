@@ -8,17 +8,12 @@ import { INITIAL_STATE } from './InitialState'
 import { createReducer } from 'reduxsauce'
 import { PermissionsTypes } from './Actions'
 
-export const permissionsEnabled = (state) => ({
+export const permissionsUpdate = (state, {payload: {granted, blocked}}) => ({
   ...state,
-  permissionsEnabled: true
-});
-
-export const permissionsBlocked = (state) => ({
-  ...state,
-  permissionsBlocked: true
+  granted,
+  blocked
 });
 
 export const reducer = createReducer(INITIAL_STATE, {
-  [PermissionsTypes.PERMISSIONS_ENABLED]: permissionsEnabled,
-  [PermissionsTypes.PERMISSIONS_BLOCKED]: permissionsBlocked,
+  [PermissionsTypes.PERMISSIONS_UPDATE]: permissionsUpdate,
 })
