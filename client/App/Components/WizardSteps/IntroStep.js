@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { View } from 'react-native'
 import { Helpers } from 'App/Theme'
 
-class IntroScreen extends Component {
+class IntroStep extends Component {
   componentDidMount() {
   }
 
@@ -15,7 +15,7 @@ class IntroScreen extends Component {
   }
 }
 
-IntroScreen.propTypes = {
+IntroStep.propTypes = {
 }
 
-export default IntroScreen;
+export default IntroStep;

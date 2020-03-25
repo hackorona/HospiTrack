@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { View } from 'react-native'
 import { Helpers } from 'App/Theme'
 
-class AuthScreen extends Component {
+class AuthStep extends Component {
   componentDidMount() {
   }
 
@@ -15,7 +15,7 @@ class AuthScreen extends Component {
   }
 }
 
-AuthScreen.propTypes = {
+AuthStep.propTypes = {
 }
 
-export default AuthScreen;
+export default AuthStep;

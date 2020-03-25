@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { View } from 'react-native'
 import { Helpers } from 'App/Theme'
 
-class AskPermissionsScreen extends Component {
+class AskPermissionsStep extends Component {
   componentDidMount() {
   }
 
@@ -15,7 +15,7 @@ class AskPermissionsScreen extends Component {
   }
 }
 
-AskPermissionsScreen.propTypes = {
+AskPermissionsStep.propTypes = {
 }
 
-export default AskPermissionsScreen;
+export default AskPermissionsStep;

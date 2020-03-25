@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { View } from 'react-native'
 import { Helpers } from 'App/Theme'
 
-class VerificationScreen extends Component {
+class VerificationStep extends Component {
   componentDidMount() {
   }
 
@@ -15,7 +15,7 @@ class VerificationScreen extends Component {
   }
 }
 
-VerificationScreen.propTypes = {
+VerificationStep.propTypes = {
 }
 
-export default VerificationScreen;
+export default VerificationStep;
