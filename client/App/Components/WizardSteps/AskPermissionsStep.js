@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
-import { View } from 'react-native'
+import { View, Text } from 'react-native'
 import { Helpers } from 'App/Theme'
+import PropTypes from 'prop-types'
 
 class AskPermissionsStep extends Component {
   componentDidMount() {
