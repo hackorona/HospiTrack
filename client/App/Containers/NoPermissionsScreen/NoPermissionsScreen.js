@@ -22,7 +22,7 @@ class NoPermissionsScreen extends React.Component {
         <GrantPermissionActions
           onExitClick={permissionsService.exitApp}
           onSettingsClick={permissionsService.openSettings}
-          onRequestClick={requestPermissions}
+          requestPermission={requestPermissions}
           isBlocked={isBlocked} />
       </View>
     )
