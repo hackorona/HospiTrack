@@ -3,37 +3,10 @@ import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/lib/integration/react'
 import createStore from 'App/Stores'
 import RootScreen from './Containers/Root/RootScreen'
-import { PermissionsAndroid } from 'react-native';
 
 const { store, persistor } = createStore()
 
 export default class App extends Component {
-  componentDidMount() {
-    this.getPermissions()
-  }
-
-  async getPermissions() {
-    const granted = await PermissionsAndroid.request(
-      PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-      {
-        title: 'Location permission is required for WiFi connections',
-        message:
-          'This app needs location permission as this is required  ' +
-          'to scan for wifi networks.',
-        buttonNegative: 'DENY',
-        buttonPositive: 'ALLOW',
-      },
-    );
-    
-    if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-        // You can now use react-native-wifi-reborn
-        console.log('Yay thank you!')
-    } else {
-        // Permission denied
-        alert('Oh no... Now I cry')
-    }
-  }
-
   render() {
     return (
       /**

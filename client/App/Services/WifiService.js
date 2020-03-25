@@ -14,5 +14,5 @@ async function fetchWifiList() {
 }
 
 export const wifiService = {
-  fetchWifiList,
+  fetchWifiList
 }
