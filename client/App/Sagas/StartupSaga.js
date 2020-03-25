@@ -1,5 +1,6 @@
-import { put, call } from 'redux-saga/effects'
+import { put, call, select } from 'redux-saga/effects'
 import ExampleActions from 'App/Stores/Example/Actions'
+import PermissionsActions from '../Stores/Permissions/Actions'
 import NavigationService from 'App/Services/NavigationService'
 import { permissionsService } from '../Services/PermissionsService';
 
@@ -15,14 +16,24 @@ export function* startup() {
   // ...
 
   // We check for location permissions granted.
-  const isPermissionsGranted = yield call(permissionsService.askPermissions);
-  
+  const permissionsStatus = yield call(permissionsService.askPermissions);
+
+  // let store know permissions status
+  yield put(PermissionsActions.permissionsUpdate(permissionsStatus));
+
   // w/o location permissions, app is useless. go to NoPermissionsScreen
   // and beg user to grant permissions.
-  if (!isPermissionsGranted) {
+  if (!permissionsStatus.granted)
     return NavigationService.navigateAndReset('NoPermissionsScreen')
-  }
 
-  // When those operations are finished we redirect to the main screen
-  NavigationService.navigateAndReset('MainScreen')
+  // App moves to main screen on permissions granted.
+}
+
+export function* permissionsUpdate() {
+  const isGranted = yield select(state => state.permissions.granted);
+
+  if (isGranted) {
+    // When those operations are finished we redirect to the main screen
+    NavigationService.navigateAndReset('MainScreen')
+  }
 }
