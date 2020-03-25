@@ -61,7 +61,7 @@ class WizardScreen extends Component {
         </Step>
         <Button title="prev" onPress={this.prev}></Button>
         <Button title="next" onPress={this.next}></Button>
-        <Button title="Exit" color="red" onPress={NavigationService.back}></Button>
+        <Button title="Exit" color="red" onPress={NavigationService.navigateBack}></Button>
       </View>
     )
   }
