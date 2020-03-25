@@ -20,6 +20,7 @@
     "prop-types": "^15.7.2",
     "react": "16.9.0",
     "react-native": "0.61.5",
+    "react-native-app-settings": "^2.0.1",
     "react-native-exit-app": "^1.1.0",
     "react-native-gesture-handler": "^1.3.0",
     "react-native-screens": "^2.4.0",
