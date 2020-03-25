@@ -2,8 +2,7 @@ import React from 'react'
 import { View } from 'react-native'
 import { Helpers } from '../Theme';
 import FullWidthButton from './FullWidthButton';
-import RNExitApp from 'react-native-exit-app';
-import OpenAppSettings from 'react-native-app-settings';
+import { permissionsService } from '../Services/PermissionsService';
 
 export default function GrantPermissionActions(props) {
   return (
@@ -11,8 +10,9 @@ export default function GrantPermissionActions(props) {
       style={[Helpers.row]}
     >
       {/* This might look oppsite in hebrew devices.. */}
-      <FullWidthButton title="Exit" onPress={RNExitApp.exitApp} />
-      <FullWidthButton title="Settings..." onPress={OpenAppSettings} />
+      <FullWidthButton title="Exit" onPress={permissionsService.exitApp} />
+      {/* <FullWidthButton title="Try again" onPress={permissionsService.askPermissionsBlocked} /> */}
+      <FullWidthButton title="Settings..." onPress={permissionsService.openSettings} />
     </View>
   );
 }
