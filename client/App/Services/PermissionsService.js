@@ -20,13 +20,10 @@ const requestPermissions = async () => {
 
 const askPermissions = async () => { 
   const granted = await requestPermissions();
-  return (granted === PermissionsAndroid.RESULTS.GRANTED);
-}
-
-const askPermissionsBlocked = async () => {
-  const granted = await requestPermissions();
-  const res = (granted === PermissionsAndroid.RESULTS.NEVER_ASK_AGAIN);
-  console.log('res ?', res);
+  return {
+    granted: granted === PermissionsAndroid.RESULTS.GRANTED,
+    blocked: granted === PermissionsAndroid.RESULTS.NEVER_ASK_AGAIN
+  };
 }
 
 const { exitApp } = RNExitApp;
@@ -37,6 +34,5 @@ const openSettings = () => OpenAppSettings.open();
 export const permissionsService = {
   askPermissions,
   exitApp,
-  askPermissionsBlocked,
   openSettings
 }
