@@ -5,11 +5,10 @@ import { Helpers, Fonts, Images, Metrics } from '../Theme';
 export default function GrantPermissionBody(props) {
   return (
     <View
-        style={[
-          {height: '90%'},
-          Helpers.fillColCenter,
-          Helpers.mainSpaceAround
-        ]}
+      style={[
+        Helpers.fillColCenter,
+        Helpers.mainSpaceAround
+      ]}
     >
       <View key="text-view"
         style={[
@@ -20,7 +19,7 @@ export default function GrantPermissionBody(props) {
         <Text style={[
           Fonts.h1,
           Metrics.bottomMargin
-          ]}>
+        ]}>
           Grant access
         </Text>
         <Text style={[
