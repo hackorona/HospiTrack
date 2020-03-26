@@ -18,6 +18,7 @@ const persistConfig = {
   blacklist: [
     // 'auth',
     'wifi',
+    'gps'
   ],
 }
 
