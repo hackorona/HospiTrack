@@ -1,6 +1,7 @@
 import { applyMiddleware, compose, createStore } from 'redux'
 import createSagaMiddleware from 'redux-saga'
 import { persistReducer, persistStore } from 'redux-persist'
+import { createLogger } from 'redux-logger';
 
 /**
  * Keep in mind this storage *is not secure*. Do not use it to store sensitive information
@@ -16,12 +17,18 @@ const persistConfig = {
    */
   blacklist: [
     // 'auth',
-    'wifi'
+    'wifi',
   ],
 }
 
 export default (rootReducer, rootSaga) => {
-  const middleware = []
+  const logger = createLogger({
+    predicate: (getState, action) => {
+      const type = action.type.toLowerCase();
+      return type.includes('wifi') || type.includes('gps');
+    }
+  });
+  const middleware = [logger]
   const enhancers = []
 
   // Connect the sagas to the redux store
