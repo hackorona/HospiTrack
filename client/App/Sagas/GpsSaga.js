@@ -1,6 +1,6 @@
-import { put, call, delay } from 'redux-saga/effects'
-import WifiActions from '../Stores/Wifi/Actions'
-import { gpsService } from '../Services/GpsService'
+import { put, call, delay } from 'redux-saga/effects';
+import GpsActions from '../Stores/Gps/Actions';
+import { gpsService } from '../Services/GpsService';
 import { NEXT_SAMPLE_DELAY as DELAY } from '../Consts';
 
 // Temp, as repeat is till exiting hospital and is NOT a const.
@@ -9,18 +9,15 @@ const REPEAT = 10;
 export function* fetchGpsLocation() {
   let counter = REPEAT;
   while (counter--) { 
-    // // Dispatch a redux action using `put()`
-    // yield put(??Actions.fetchGpsLoading())
+    yield put(GpsActions.fetchGpsLocationLoading())
 
     // Fetch gps location from gpsService
     try {
-      const geoLocation = yield call(gpsService.getGPSLocation)
-      // yield put(??Actions.fetchGpsSuccess(geoLocation))
-      console.log('geoLocation ?', geoLocation);
+      const gpsLocation = yield call(gpsService.getGPSLocation)
+      yield put(GpsActions.fetchGpsLocationSuccess(gpsLocation))
     } catch(e) {
-      console.error('error ? ', e);
-      // yield put(??Actions.fetchGpsFailure('Error with gps'));
-      // TODO: for any error - we should put null result
+      yield put(GpsActions.fetchGpsLocationFailure(e));
+      // TODO: for any error - we should put null result (at sending to db..)
     }
 
     yield delay(DELAY);
