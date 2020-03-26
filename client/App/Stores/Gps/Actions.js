@@ -6,7 +6,7 @@ const { Types, Creators } = createActions({
   // The operation has started and is loading
   fetchGpsLocationLoading: null,
   // User informations were successfully fetched
-  fetchGpsLocationSuccess: ['wifiArr'],
+  fetchGpsLocationSuccess: ['gpsLocation'],
   // An error occurred
   fetchGpsLocationFailure: ['errorMessage'],
 })
