@@ -1,9 +1,10 @@
 import { put, call, delay } from 'redux-saga/effects'
 import WifiActions from '../Stores/Wifi/Actions'
 import { wifiService } from '../Services/WifiService'
+import { NEXT_SAMPLE_DELAY as DELAY } from '../Consts';
 
-const DELAY = 1000;
-const REPEAT = 10; 
+// Temp, as repeat is till exiting hospital and is NOT a const.
+const REPEAT = 10;
 
 export function* fetchWifiList() {
   let counter = REPEAT;
@@ -11,7 +12,7 @@ export function* fetchWifiList() {
     // Dispatch a redux action using `put()`
     yield put(WifiActions.fetchWifiListLoading())
 
-    // Fetch user informations from an API
+    // Fetch wifi informations from the wifiService
     const wifiArr = yield call(wifiService.fetchWifiList)
     if (wifiArr) {
       yield put(WifiActions.fetchWifiListSuccess(wifiArr))

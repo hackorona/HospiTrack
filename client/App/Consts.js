@@ -1,0 +1,3 @@
+export const REPEAT_LOCATION_SCAN_TIMES = 10;
+export const NEXT_SAMPLE_DELAY = 5000;
+export const GPS_TIMEOUT = NEXT_SAMPLE_DELAY;
