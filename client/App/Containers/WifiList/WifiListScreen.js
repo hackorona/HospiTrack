@@ -3,28 +3,50 @@ import { TouchableOpacity, Text, View, ActivityIndicator, Image } from 'react-na
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import WifiActions from 'App/Stores/Wifi/Actions'
+import GpsActions from 'App/Stores/Gps/Actions'
 import Style from './WifiListScreenStyle'
 import { Helpers, Images, Metrics } from 'App/Theme'
 
 class WifiListScreen extends React.Component {
   componentDidMount() {
-    this._fetchWifiList();
+    this._fetchData();
   }
 
-  _fetchWifiList = () => {
-    this.props.fetchWifiList()
+  _fetchData = () => {
+    this.props.fetchWifiList();
+    this.props.fetchGpsLocation();
   }
   
   componentDidUpdate(prevProps) {
-    const {wifiList} = this.props;
+    const {wifiList} = this.props.wifiList;
     const {wifiList: prevWifiList} = prevProps;
     
     if (JSON.stringify(wifiList) != JSON.stringify(prevWifiList)) {
       console.log('wifiList ?', wifiList);
+    } else {
+      console.log('Wifi did not change :-(');
     }
   }
 
   render() {
+    console.log(this.props.gpsLocation);
+    console.log(this.props.wifiList);
+    let gpsData;
+    if(this.props.gpsLocation){
+      gpsData = 
+      <Text>
+      {"\n"}     
+      accuracy: {this.props.gpsLocation.accuracy}, {"\n"}
+      alt:      {this.props.gpsLocation.altitude}, {"\n"}
+      lat:      {this.props.gpsLocation.latitude}, {"\n"}
+      long:     {this.props.gpsLocation.longitude}
+    </Text> 
+    } else {
+      gpsData = 
+      <Text>
+        gps data loading or unavailable
+      </Text>
+    }
     return (
       <View
         style={[
@@ -34,11 +56,11 @@ class WifiListScreen extends React.Component {
           Metrics.mediumVerticalMargin,
         ]}
       >
-        {this.props.wifiIsLoading ? (
+        {this.props.wifiIsLoading || this.props.gpsLocationIsLoading ? (
           <ActivityIndicator size="large" color="#0000ff" />
         ) : (
           <View>
-            <TouchableOpacity onPress={this._fetchWifiList}>
+            <TouchableOpacity onPress={this._fetchData}>
               <View style={Style.logoContainer}>
                 <Image style={Helpers.fullSize} source={Images.logo} resizeMode={'contain'} />
               </View>
@@ -50,10 +72,18 @@ class WifiListScreen extends React.Component {
               {
                 this.props.wifiList.map((net, i) => (
                   <Text key={`net_${i}`} style={Style.result}>
-                    {i} - ssid: {net.SSID}, level: {net.level}
+                    {i+1} - ssid: {net.SSID}, RSSI: {net.level}
                   </Text>
                 ))
-              }
+              }   
+              </View>
+            )}
+            
+            {this.props.gpsLocationErrorMessage ? (
+              <Text style={Style.error}>{this.props.gpsLocationErrorMessage}</Text>
+            ) : (
+              <View>
+              {gpsData}
               </View>
             )}
           </View>
@@ -68,16 +98,26 @@ WifiListScreen.propTypes = {
   wifiErrorMessage: PropTypes.string,
   wifiList: PropTypes.arrayOf(PropTypes.object).isRequired,
   fetchWifiList: PropTypes.func.isRequired,
+
+  gpsLocation: PropTypes.object,
+  gpsLocationIsLoading: PropTypes.bool.isRequired,
+  gpsLocationErrorMessage: PropTypes.string,
+  fetchGpsLocation: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = (state) => ({
   wifiList: state.wifi.wifiList,
   wifiIsLoading: state.wifi.wifiListIsLoading,
   wifiErrorMessage: state.wifi.wifiListErrorMessage,
+  
+  gpsLocation: state.gps.gpsLocation && state.gps.gpsLocation.coords,
+  gpsLocationIsLoading: state.gps.gpsLocationIsLoading,
+  gpsLocationErrorMessage: state.gps.gpsLocationErrorMessage,
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  fetchWifiList: () => dispatch(WifiActions.fetchWifiList())
+  fetchWifiList: () => dispatch(WifiActions.fetchWifiList()),
+  fetchGpsLocation: () => dispatch(GpsActions.fetchGpsLocation())
 })
 
 export default connect(
