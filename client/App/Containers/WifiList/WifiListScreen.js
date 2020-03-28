@@ -29,24 +29,25 @@ class WifiListScreen extends React.Component {
   }
 
   render() {
-    console.log(this.props.gpsLocation);
-    console.log(this.props.wifiList);
+
+    // Handle gpsLocation being undefined
     let gpsData;
     if(this.props.gpsLocation){
       gpsData = 
-      <Text>
-      {"\n"}     
-      accuracy: {this.props.gpsLocation.accuracy}, {"\n"}
-      alt:      {this.props.gpsLocation.altitude}, {"\n"}
-      lat:      {this.props.gpsLocation.latitude}, {"\n"}
-      long:     {this.props.gpsLocation.longitude}
-    </Text> 
+          <Text>
+            {"\n"}     
+            accuracy: {this.props.gpsLocation.accuracy}, {"\n"}
+            alt:      {this.props.gpsLocation.altitude}, {"\n"}
+            lat:      {this.props.gpsLocation.latitude}, {"\n"}
+            long:     {this.props.gpsLocation.longitude}
+          </Text> 
     } else {
       gpsData = 
       <Text>
         gps data loading or unavailable
       </Text>
     }
+    
     return (
       <View
         style={[
