@@ -4,10 +4,10 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import WifiActions from 'App/Stores/Wifi/Actions'
 import GpsActions from 'App/Stores/Gps/Actions'
-import Style from './WifiListScreenStyle'
+import Style from './DataScreenStyle'
 import { Helpers, Images, Metrics } from 'App/Theme'
 
-class WifiListScreen extends React.Component {
+class DataScreen extends React.Component {
   componentDidMount() {
     this._fetchData();
   }
@@ -73,7 +73,7 @@ class WifiListScreen extends React.Component {
               {
                 this.props.wifiList.map((net, i) => (
                   <Text key={`net_${i}`} style={Style.result}>
-                    {i+1} - ssid: {net.SSID}, RSSI: {net.level}
+                    {i+1}. ssid: {net.SSID}, RSSI: {net.level}
                   </Text>
                 ))
               }   
@@ -94,7 +94,7 @@ class WifiListScreen extends React.Component {
   }
 }
 
-WifiListScreen.propTypes = {
+DataScreen.propTypes = {
   wifiIsLoading: PropTypes.bool.isRequired,
   wifiErrorMessage: PropTypes.string,
   wifiList: PropTypes.arrayOf(PropTypes.object).isRequired,
@@ -124,4 +124,4 @@ const mapDispatchToProps = (dispatch) => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(WifiListScreen)
+)(DataScreen)
