@@ -33,18 +33,20 @@ class DataScreen extends React.Component {
     // Handle gpsLocation being undefined
     let gpsData;
     if(this.props.gpsLocation){
+      let gpsLocation = this.props.gpsLocation;
       gpsData = 
-          <Text>
-            {"\n"}     
-            accuracy: {this.props.gpsLocation.accuracy}, {"\n"}
-            alt:      {this.props.gpsLocation.altitude}, {"\n"}
-            lat:      {this.props.gpsLocation.latitude}, {"\n"}
-            long:     {this.props.gpsLocation.longitude}
+          <Text> 
+            {"\n"}
+            accuracy: {gpsLocation.accuracy }, {"\n"}
+            alt:      {gpsLocation.altitude }, {"\n"}
+            lat:      {gpsLocation.latitude }, {"\n"}
+            long:     {gpsLocation.longitude}
           </Text> 
     } else {
       gpsData = 
       <Text>
-        gps data loading or unavailable
+        {"\n"}
+        GPS data is loading...
       </Text>
     }
     
@@ -57,7 +59,7 @@ class DataScreen extends React.Component {
           Metrics.mediumVerticalMargin,
         ]}
       >
-        {this.props.wifiIsLoading || this.props.gpsLocationIsLoading ? (
+        {this.props.wifiIsLoading ? (
           <ActivityIndicator size="large" color="#0000ff" />
         ) : (
           <View>
@@ -81,7 +83,9 @@ class DataScreen extends React.Component {
             )}
             
             {this.props.gpsLocationErrorMessage ? (
-              <Text style={Style.error}>{this.props.gpsLocationErrorMessage}</Text>
+              <Text style={Style.error}>
+                {this.props.gpsLocationErrorMessage.message}
+              </Text>
             ) : (
               <View>
               {gpsData}
@@ -99,10 +103,9 @@ DataScreen.propTypes = {
   wifiErrorMessage: PropTypes.string,
   wifiList: PropTypes.arrayOf(PropTypes.object).isRequired,
   fetchWifiList: PropTypes.func.isRequired,
-
   gpsLocation: PropTypes.object,
   gpsLocationIsLoading: PropTypes.bool.isRequired,
-  gpsLocationErrorMessage: PropTypes.string,
+  gpsLocationErrorMessage: PropTypes.object,
   fetchGpsLocation: PropTypes.func.isRequired,
 }
 
@@ -110,7 +113,6 @@ const mapStateToProps = (state) => ({
   wifiList: state.wifi.wifiList,
   wifiIsLoading: state.wifi.wifiListIsLoading,
   wifiErrorMessage: state.wifi.wifiListErrorMessage,
-  
   gpsLocation: state.gps.gpsLocation && state.gps.gpsLocation.coords,
   gpsLocationIsLoading: state.gps.gpsLocationIsLoading,
   gpsLocationErrorMessage: state.gps.gpsLocationErrorMessage,

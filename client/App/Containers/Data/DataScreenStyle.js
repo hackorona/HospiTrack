@@ -22,7 +22,7 @@ export default StyleSheet.create({
   result: {
     ...Fonts.normal,
     marginBottom: Metrics.tiny,
-    textAlign: 'center',
+    textAlign: 'left',
   },
   text: {
     ...Fonts.normal,
