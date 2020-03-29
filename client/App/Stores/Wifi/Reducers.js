@@ -25,7 +25,7 @@ export const fetchWifiListSuccess = (state, payload) => ({
 
 export const fetchWifiListFailure = (state, { errorMessage }) => ({
   ...state,
-  wifiList: {},
+  wifiList: INITIAL_STATE.wifiList,
   wifiListIsLoading: false,
   wifiListErrorMessage: errorMessage,
 })

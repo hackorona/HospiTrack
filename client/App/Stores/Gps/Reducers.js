@@ -19,7 +19,7 @@ export const fetchGpsLocationSuccess = (state, { gpsLocation }) => ({
 
 export const fetchGpsLocationFailure = (state, { errorMessage }) => ({
   ...state,
-  gpsLocation: {},
+  gpsLocation: INITIAL_STATE.gpsLocation,
   gpsLocationIsLoading: false,
   gpsLocationErrorMessage: errorMessage,
 })
