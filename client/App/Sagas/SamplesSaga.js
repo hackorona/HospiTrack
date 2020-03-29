@@ -48,11 +48,11 @@ export function* sampleDataOnce() {
       console.log('success - both are here :D');
     }
 
-    const gpsDataForSample = gpsService.getGpsDataForSample(gps);
-    const wifiDataForSample = wifiService.getWifiDataForSample(wifi);
+    const gpsDataForSample = yield call(gpsService.getGpsDataForSample, gps);
+    const wifiDataForSample = yield call(wifiService.getWifiDataForSample, wifi);
 
     const sample = {
-      imei: 'todo',
+      // imei is coming from wifiService as it's temp.
       ...gpsDataForSample,
       ...wifiDataForSample,
       // Time in ms
