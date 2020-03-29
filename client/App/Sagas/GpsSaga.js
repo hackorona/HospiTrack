@@ -4,6 +4,7 @@ import { gpsService } from '../Services/GpsService';
 
 export function* fetchGpsLocation() {
   yield put(GpsActions.fetchGpsLocationLoading())
+  // TODO: retry as long as timeout didn't reach (yeah I said it.) (check out service itself ;) iYKwIM)
 
   // Fetch gps location from gpsService
   try {
