@@ -5,4 +5,5 @@ export const INITIAL_STATE = {
   gpsLocation: {},
   gpsLocationIsLoading: false,
   gpsLocationErrorMessage: null,
+  sampleSent: false
 }
