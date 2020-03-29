@@ -26,8 +26,9 @@ export default (rootReducer, rootSaga) => {
   const logger = createLogger({
     predicate: (getState, action) => {
       // Make logger sleep always.
-      return false;
-    }
+      return action.type.includes('SUCCESS');
+    },
+    collapsed: () => true
   });
   const middleware = [logger]
   const enhancers = []
