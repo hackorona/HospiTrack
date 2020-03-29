@@ -1,8 +1,10 @@
-import { race, take, select, put, all, delay, fork, cancel } from 'redux-saga/effects';
+import { race, take, select, put, all, delay, fork, cancel, call } from 'redux-saga/effects';
 import GpsActions, { GpsTypes } from '../Stores/Gps/Actions';
 import { NEXT_SAMPLE_DELAY as DELAY } from '../Consts';
 import WifiActions, { WifiTypes } from '../Stores/Wifi/Actions';
 import SampleActions from '../Stores/Samples/Actions';
+import { gpsService } from '../Services/GpsService';
+import { wifiService } from '../Services/WifiService';
 
 const wifiListSelector = (state) => !state.wifi.sampleSent && state.wifi.wifiList;
 const gpsLocationSelector = (state) => !state.gps.sampleSent && state.gps.gpsLocation;
@@ -18,43 +20,56 @@ export function* sampleData() {
 export function* sampleDataOnce() {
   console.log('sampleDataOnce saga');
 
-  // Start scan!
-  yield all([
-    put(GpsActions.fetchGpsLocation()),
-    put(WifiActions.fetchWifiList())
-  ]);
+  try {
 
-  const {data, timeout} = yield race({
-    data: all([
-      take(GpsTypes.FETCH_GPS_LOCATION_SUCCESS),
-      take(WifiTypes.FETCH_WIFI_LIST_SUCCESS)
-    ]),
-    timeout: delay(DELAY)
-  });
+    // Start scan!
+    yield all([
+      put(GpsActions.fetchGpsLocation()),
+      put(WifiActions.fetchWifiList())
+    ]);
 
-  const wifi = yield select(wifiListSelector);
-  const gps = yield select(gpsLocationSelector);
+    const {data, timeout} = yield race({
+      data: all([
+        take(GpsTypes.FETCH_GPS_LOCATION_SUCCESS),
+        take(WifiTypes.FETCH_WIFI_LIST_SUCCESS)
+      ]),
+      timeout: delay(DELAY)
+    });
 
-  if (timeout) {
-    console.log('timeout');
-    if (!wifi) {
-      console.log('no wifi makes me cryfi');
-    }    
-  } else {
-    console.log('success - both are here :D');
-  }
+    const wifi = yield select(wifiListSelector);
+    const gps = yield select(gpsLocationSelector);
 
-  const sample = {
-    timestamp: new Date(),
-    wifi,
-    gps
-  };
+    if (timeout) {
+      console.log('timeout');
+      if (!wifi) {
+        throw new Error('No wifi makes me cryfi!');
+      }
+    } else {
+      console.log('success - both are here :D');
+    }
 
-  console.log('sample ?', sample);
-  // TODO: add sample to store
-  yield put(SampleActions.sampleSent());
+    const gpsDataForSample = gpsService.getGpsDataForSample(gps);
+    const wifiDataForSample = wifiService.getWifiDataForSample(wifi);
+
+    const sample = {
+      imei: 'todo',
+      ...gpsDataForSample,
+      ...wifiDataForSample,
+      // Time in ms
+      timestamp: Date.now(),
+    };
+
+    yield call(sendSample, sample);
+  } catch(e) {
+    console.log('e ?', e);
+  } finally {
+    // TODO: add sample to store
+    // This marks last samples as already seen, that's why we always dispatch this.
+    // TODO: consider rename to markSample (as it isn't neccearly sent..)
+    yield put(SampleActions.sampleSent());
+  }  
 }
 
-export function* sendSample() {
-
+export function* sendSample(sample) {
+  console.log('sample to send ?', sample);
 }
