@@ -5,6 +5,7 @@ import { PermissionsTypes } from '../Stores/Permissions/Actions'
 import { startup, permissionsUpdate, permissionsRequest } from './StartupSaga'
 import { fetchWifiList } from './WifiSaga'
 import { fetchGpsLocation } from './GpsSaga'
+import { GpsTypes } from '../Stores/Gps/Actions'
 
 export default function* root() {
   yield all([
@@ -16,7 +17,6 @@ export default function* root() {
     takeLatest(PermissionsTypes.PERMISSIONS_REQUEST, permissionsRequest),
     takeLatest(PermissionsTypes.PERMISSIONS_UPDATE, permissionsUpdate),
     takeLatest(WifiTypes.FETCH_WIFI_LIST, fetchWifiList),
-    // TODO: trigger will be a neural type, which will be added in a differrent task.
-    takeLatest(WifiTypes.FETCH_WIFI_LIST, fetchGpsLocation),
+    takeLatest(GpsTypes.FETCH_GPS_LOCATION, fetchGpsLocation),
   ])
 }
