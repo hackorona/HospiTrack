@@ -6,7 +6,7 @@ import { startup, permissionsUpdate, permissionsRequest } from './StartupSaga'
 import { fetchWifiList } from './WifiSaga'
 import { fetchGpsLocation } from './GpsSaga'
 import { GpsTypes } from '../Stores/Gps/Actions'
-import { sampleData } from './samplesSaga'
+import { sampleData } from './SamplesSaga'
 import { SamplesTypes } from '../Stores/Samples/Actions';
 
 export default function* root() {
