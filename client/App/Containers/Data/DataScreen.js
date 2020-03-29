@@ -2,8 +2,7 @@ import React from 'react'
 import { TouchableOpacity, Text, View, ActivityIndicator, Image } from 'react-native'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import WifiActions from 'App/Stores/Wifi/Actions'
-import GpsActions from 'App/Stores/Gps/Actions'
+import SamplesActions from '../../Stores/Samples/Actions'
 import Style from './DataScreenStyle'
 import { Helpers, Images, Metrics } from 'App/Theme'
 
@@ -116,7 +115,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  startSample: () => dispatch({type: 'START_SAMPLE'})
+  startSample: () => dispatch(SamplesActions.startSample())
 })
 
 export default connect(
