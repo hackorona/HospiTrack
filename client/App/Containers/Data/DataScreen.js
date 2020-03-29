@@ -18,8 +18,8 @@ class DataScreen extends React.Component {
   }
   
   componentDidUpdate(prevProps) {
-    const {wifiList} = this.props.wifiList;
-    const {wifiList: prevWifiList} = prevProps.wifiList;
+    const {wifiList} = this.props;
+    const {wifiList: prevWifiList} = prevProps;
     
     if (JSON.stringify(wifiList) != JSON.stringify(prevWifiList)) {
       console.log('wifiList ?', wifiList);
@@ -33,7 +33,7 @@ class DataScreen extends React.Component {
     // Handle gpsLocation being undefined
     let gpsData;
     if(this.props.gpsLocation){
-      let gpsLocation = this.props.gpsLocation;
+      let {gpsLocation} = this.props;
       gpsData = 
           <Text> 
             {"\n"}
@@ -71,14 +71,14 @@ class DataScreen extends React.Component {
             {this.props.wifiErrorMessage ? (
               <Text style={Style.error}>{this.props.wifiErrorMessage}</Text>
             ) : (
-              <View>
-              {
-                this.props.wifiList.map((net, i) => (
-                  <Text key={`net_${i}`} style={Style.result}>
-                    {i+1}. ssid: {net.SSID}, RSSI: {net.level}
-                  </Text>
-                ))
-              }   
+              <View>              
+                {
+                  this.props.wifiList.map((net, i) => (
+                    <Text key={`net_${i}`} style={Style.result}>
+                      {i+1}. ssid: {net.SSID}, RSSI: {net.level}
+                    </Text>
+                  ))
+                }           
               </View>
             )}
             
