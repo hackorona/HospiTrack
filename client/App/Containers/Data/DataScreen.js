@@ -60,38 +60,40 @@ class DataScreen extends React.Component {
         {this.props.wifiIsLoading ? (
           <ActivityIndicator size="large" color="#0000ff" />
         ) : (
-          <ScrollView>
+          <View>
             <TouchableOpacity onPress={this._fetchData}>
               <View style={Style.logoContainer}>
                 <Image style={Helpers.fullSize} source={Images.logo} resizeMode={'contain'} />
               </View>
             </TouchableOpacity>
-            {this.props.gpsLocationErrorMessage ? (
-              <Text style={Style.error}>
-                {this.props.gpsLocationErrorMessage.message}
-              </Text>
-            ) : (
-              <View>
-              {gpsData}
-              </View>
-            )}
-            {this.props.wifiErrorMessage ? (
-              <Text style={Style.error}>{this.props.wifiErrorMessage}</Text>
-            ) : (
-              <View>
-              <Text>
-                {"\n"}
-              </Text>             
-                {
-                  this.props.wifiList.map((net, i) => (
-                    <Text key={`net_${i}`} style={Style.result}>
-                      {i+1}. SSID: {net.SSID}, {"\n   "} RSSI: {net.level}
-                    </Text>
-                  ))
-                }           
-              </View>
-            )}
-          </ScrollView>
+            <ScrollView>
+              {this.props.gpsLocationErrorMessage ? (
+                <Text style={Style.error}>
+                  {this.props.gpsLocationErrorMessage.message}
+                </Text>
+              ) : (
+                <View>
+                {gpsData}
+                </View>
+              )}
+              {this.props.wifiErrorMessage ? (
+                <Text style={Style.error}>{this.props.wifiErrorMessage}</Text>
+              ) : (
+                <View>
+                <Text>
+                  {"\n"}
+                </Text>             
+                  {
+                    this.props.wifiList.map((net, i) => (
+                      <Text key={`net_${i}`} style={Style.result}>
+                        {i+1}. SSID: {net.SSID}, {"\n   "} RSSI: {net.level}
+                      </Text>
+                    ))
+                  }           
+                </View>
+              )}
+            </ScrollView>
+          </View>
         )}
       </View>
     )
