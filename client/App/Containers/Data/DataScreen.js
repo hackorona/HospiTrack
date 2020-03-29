@@ -2,8 +2,7 @@ import React from 'react'
 import { TouchableOpacity, Text, View,ScrollView, ActivityIndicator, Image } from 'react-native'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import WifiActions from 'App/Stores/Wifi/Actions'
-import GpsActions from 'App/Stores/Gps/Actions'
+import SamplesActions from '../../Stores/Samples/Actions'
 import Style from './DataScreenStyle'
 import { Helpers, Images, Metrics } from 'App/Theme'
 
@@ -13,8 +12,7 @@ class DataScreen extends React.Component {
   }
 
   _fetchData = () => {
-    this.props.fetchWifiList();
-    this.props.fetchGpsLocation();
+    this.props.startSample();
   }
   
   componentDidUpdate(prevProps) {
@@ -84,7 +82,7 @@ class DataScreen extends React.Component {
                   {"\n"}
                 </Text>             
                   {
-                    this.props.wifiList.map((net, i) => (
+                    this.props.wifiList && this.props.wifiList.map((net, i) => (
                       <Text key={`net_${i}`} style={Style.result}>
                         {i+1}. SSID: {net.SSID}, {"\n   "} RSSI: {net.level}
                       </Text>
@@ -103,12 +101,10 @@ class DataScreen extends React.Component {
 DataScreen.propTypes = {
   wifiIsLoading: PropTypes.bool.isRequired,
   wifiErrorMessage: PropTypes.string,
-  wifiList: PropTypes.arrayOf(PropTypes.object).isRequired,
-  fetchWifiList: PropTypes.func.isRequired,
+  wifiList: PropTypes.arrayOf(PropTypes.object),
   gpsLocation: PropTypes.object,
   gpsLocationIsLoading: PropTypes.bool.isRequired,
   gpsLocationErrorMessage: PropTypes.object,
-  fetchGpsLocation: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = (state) => ({
@@ -121,8 +117,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  fetchWifiList: () => dispatch(WifiActions.fetchWifiList()),
-  fetchGpsLocation: () => dispatch(GpsActions.fetchGpsLocation())
+  startSample: () => dispatch(SamplesActions.startSample())
 })
 
 export default connect(

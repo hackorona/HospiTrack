@@ -8,6 +8,7 @@ async function fetchWifiList() {
           let wifiArray =  JSON.parse(wifiList);
           res(wifiArray);
       },
+      // TODO: handle error somehow
       error =>  rej(error)
     );
   })

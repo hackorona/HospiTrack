@@ -25,9 +25,10 @@ const persistConfig = {
 export default (rootReducer, rootSaga) => {
   const logger = createLogger({
     predicate: (getState, action) => {
-      const type = action.type.toLowerCase();
-      return type.includes('wifi') || type.includes('gps');
-    }
+      // Make logger sleep always.
+      return action.type.includes('SUCCESS');
+    },
+    collapsed: () => true
   });
   const middleware = [logger]
   const enhancers = []
