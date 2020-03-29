@@ -13,8 +13,7 @@ class DataScreen extends React.Component {
   }
 
   _fetchData = () => {
-    this.props.fetchWifiList();
-    this.props.fetchGpsLocation();
+    this.props.startSample();
   }
   
   componentDidUpdate(prevProps) {
@@ -73,7 +72,7 @@ class DataScreen extends React.Component {
             ) : (
               <View>              
                 {
-                  this.props.wifiList.map((net, i) => (
+                  this.props.wifiList && this.props.wifiList.map((net, i) => (
                     <Text key={`net_${i}`} style={Style.result}>
                       {i+1}. ssid: {net.SSID}, RSSI: {net.level}
                     </Text>
@@ -101,12 +100,10 @@ class DataScreen extends React.Component {
 DataScreen.propTypes = {
   wifiIsLoading: PropTypes.bool.isRequired,
   wifiErrorMessage: PropTypes.string,
-  wifiList: PropTypes.arrayOf(PropTypes.object).isRequired,
-  fetchWifiList: PropTypes.func.isRequired,
+  wifiList: PropTypes.arrayOf(PropTypes.object),
   gpsLocation: PropTypes.object,
   gpsLocationIsLoading: PropTypes.bool.isRequired,
   gpsLocationErrorMessage: PropTypes.object,
-  fetchGpsLocation: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = (state) => ({
@@ -119,8 +116,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  fetchWifiList: () => dispatch(WifiActions.fetchWifiList()),
-  fetchGpsLocation: () => dispatch(GpsActions.fetchGpsLocation())
+  startSample: () => dispatch({type: 'START_SAMPLE'})
 })
 
 export default connect(
