@@ -1,6 +1,6 @@
 import { createAppContainer, createStackNavigator } from 'react-navigation'
 import NoPermissionsScreen from '../Containers/NoPermissionsScreen/NoPermissionsScreen'
-import WifiListScreen from '../Containers/WifiList/WifiListScreen'
+import DataScreen from '../Containers/Data/DataScreen'
 import SplashScreen from '../Containers/SplashScreen/SplashScreen'
 
 /**
@@ -12,7 +12,7 @@ const StackNavigator = createStackNavigator(
   {
     // Create the application routes here (the key is the route name, the value is the target screen)
     SplashScreen: SplashScreen,
-    MainScreen: WifiListScreen,
+    MainScreen: DataScreen,
     NoPermissionsScreen
   },
   {
