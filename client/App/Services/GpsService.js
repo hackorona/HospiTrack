@@ -15,6 +15,20 @@ function getGPSLocation() {
   )});
 }
 
+function getGpsDataForSample(gpsLocation) {
+  let accuracy, altitude, longitude, latitude;
+
+  // Define all gps data! If gpsLocation is undefined, leave undefined
+  if (gpsLocation) {
+    const { coords } = gpsLocation;
+    // destruct elements
+    ({accuracy, altitude, longitude, latitude} = coords);
+  }
+
+  return { accuracy, altitude, longitude, latitude };
+}
+
 export const gpsService = {
-  getGPSLocation
+  getGPSLocation,
+  getGpsDataForSample
 }
