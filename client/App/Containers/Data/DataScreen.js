@@ -1,5 +1,5 @@
 import React from 'react'
-import { TouchableOpacity, Text, View, ActivityIndicator, Image } from 'react-native'
+import { TouchableOpacity, Text, View,ScrollView, ActivityIndicator, Image } from 'react-native'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import WifiActions from 'App/Stores/Wifi/Actions'
@@ -36,7 +36,6 @@ class DataScreen extends React.Component {
       let {gpsLocation} = this.props;
       gpsData = 
           <Text> 
-            {"\n"}
             accuracy: {gpsLocation.accuracy }, {"\n"}
             alt:      {gpsLocation.altitude }, {"\n"}
             lat:      {gpsLocation.latitude }, {"\n"}
@@ -45,7 +44,6 @@ class DataScreen extends React.Component {
     } else {
       gpsData = 
       <Text>
-        {"\n"}
         GPS data is loading...
       </Text>
     }
@@ -62,26 +60,12 @@ class DataScreen extends React.Component {
         {this.props.wifiIsLoading ? (
           <ActivityIndicator size="large" color="#0000ff" />
         ) : (
-          <View>
+          <ScrollView>
             <TouchableOpacity onPress={this._fetchData}>
               <View style={Style.logoContainer}>
                 <Image style={Helpers.fullSize} source={Images.logo} resizeMode={'contain'} />
               </View>
             </TouchableOpacity>
-            {this.props.wifiErrorMessage ? (
-              <Text style={Style.error}>{this.props.wifiErrorMessage}</Text>
-            ) : (
-              <View>              
-                {
-                  this.props.wifiList.map((net, i) => (
-                    <Text key={`net_${i}`} style={Style.result}>
-                      {i+1}. ssid: {net.SSID}, RSSI: {net.level}
-                    </Text>
-                  ))
-                }           
-              </View>
-            )}
-            
             {this.props.gpsLocationErrorMessage ? (
               <Text style={Style.error}>
                 {this.props.gpsLocationErrorMessage.message}
@@ -91,7 +75,23 @@ class DataScreen extends React.Component {
               {gpsData}
               </View>
             )}
-          </View>
+            {this.props.wifiErrorMessage ? (
+              <Text style={Style.error}>{this.props.wifiErrorMessage}</Text>
+            ) : (
+              <View>
+              <Text>
+                {"\n"}
+              </Text>             
+                {
+                  this.props.wifiList.map((net, i) => (
+                    <Text key={`net_${i}`} style={Style.result}>
+                      {i+1}. ssid: {net.SSID}, RSSI: {net.level}
+                    </Text>
+                  ))
+                }           
+              </View>
+            )}
+          </ScrollView>
         )}
       </View>
     )
