@@ -66,7 +66,6 @@ class DataScreen extends React.Component {
                 <Image style={Helpers.fullSize} source={Images.logo} resizeMode={'contain'} />
               </View>
             </TouchableOpacity>
-            <ScrollView>
               {this.props.gpsLocationErrorMessage ? (
                 <Text style={Style.error}>
                   {this.props.gpsLocationErrorMessage.message}
@@ -76,6 +75,7 @@ class DataScreen extends React.Component {
                 {gpsData}
                 </View>
               )}
+            <ScrollView>
               {this.props.wifiErrorMessage ? (
                 <Text style={Style.error}>{this.props.wifiErrorMessage}</Text>
               ) : (
