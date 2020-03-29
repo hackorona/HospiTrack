@@ -17,7 +17,7 @@ export default StyleSheet.create({
   logoContainer: {
     ...Helpers.fullWidth,
     height: 150,
-    marginBottom: 25,
+    marginBottom: 5,
   },
   result: {
     ...Fonts.normal,
