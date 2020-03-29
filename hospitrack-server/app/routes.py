@@ -4,6 +4,10 @@ from app.controllers.demo_router_scans import DemoRouterScansController
 import time
 import json
 
+@app.route('/api/test')
+def test():
+    return 'success'
+
 @app.route('/api/insert-router-scan')
 def insert_router_scan():
     """
