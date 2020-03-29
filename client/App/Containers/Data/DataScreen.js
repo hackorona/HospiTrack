@@ -19,7 +19,7 @@ class DataScreen extends React.Component {
   
   componentDidUpdate(prevProps) {
     const {wifiList} = this.props.wifiList;
-    const {wifiList: prevWifiList} = prevProps;
+    const {wifiList: prevWifiList} = prevProps.wifiList;
     
     if (JSON.stringify(wifiList) != JSON.stringify(prevWifiList)) {
       console.log('wifiList ?', wifiList);
