@@ -1,4 +1,4 @@
-import { race, take, select, put, all, delay } from 'redux-saga/effects';
+import { race, take, select, put, all, delay, fork, cancel } from 'redux-saga/effects';
 import GpsActions, { GpsTypes } from '../Stores/Gps/Actions';
 import { NEXT_SAMPLE_DELAY as DELAY } from '../Consts';
 import WifiActions, { WifiTypes } from '../Stores/Wifi/Actions';
@@ -8,7 +8,15 @@ const wifiListSelector = (state) => !state.wifi.sampleSent && state.wifi.wifiLis
 const gpsLocationSelector = (state) => !state.gps.sampleSent && state.gps.gpsLocation;
 
 export function* sampleData() {
-  console.log('sampleData saga');
+  while (true) {
+    const task = yield fork(sampleDataOnce);
+    yield delay(DELAY);
+    if (task) cancel(task);
+  } 
+}
+
+export function* sampleDataOnce() {
+  console.log('sampleDataOnce saga');
 
   // Start scan!
   yield all([
