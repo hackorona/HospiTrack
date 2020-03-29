@@ -16,6 +16,8 @@ async function fetchWifiList() {
 }
 
 async function getWifiDataForSample(wifiList) {
+  // TODO: if imei is here to stay, it should be retrieved
+  // on startup once, and saved to store!
   const imeis = await IMEI.getImei();
   const imei = imeis.length ? imeis[0] : null;
   const wifiDict = wifiList.reduce((accum, curr) => {
