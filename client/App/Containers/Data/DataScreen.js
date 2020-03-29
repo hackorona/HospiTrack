@@ -85,7 +85,7 @@ class DataScreen extends React.Component {
                 {
                   this.props.wifiList.map((net, i) => (
                     <Text key={`net_${i}`} style={Style.result}>
-                      {i+1}. ssid: {net.SSID}, RSSI: {net.level}
+                      {i+1}. SSID: {net.SSID}, {"\n   "} RSSI: {net.level}
                     </Text>
                   ))
                 }           
