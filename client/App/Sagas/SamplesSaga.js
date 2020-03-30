@@ -14,7 +14,6 @@ const DELAY =
 Platform.Version >= ANDROID10 ? ANDROID10_SAMPLE_DELAY : NEXT_SAMPLE_DELAY;
 
 export function* sampleData() {
-  console.log('API level: ', Platform.Version);
   while (true) {
     const task = yield fork(sampleDataOnce);
     yield delay(DELAY);
