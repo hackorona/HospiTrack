@@ -22,3 +22,5 @@ for PACKAGE in */; do
   # Copy to proper location in node_modules
   cp -vu ${PACKAGE}* ../node_modules/${PACKAGE}android
 done
+
+echo "All packages repaired!"
