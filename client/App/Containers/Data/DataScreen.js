@@ -1,5 +1,5 @@
 import React from 'react'
-import { TouchableOpacity, Text, View,ScrollView, ActivityIndicator, Image } from 'react-native'
+import { TouchableOpacity, Text, View, ScrollView, ActivityIndicator, Image } from 'react-native'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import SamplesActions from '../../Stores/Samples/Actions'
@@ -22,12 +22,11 @@ class DataScreen extends React.Component {
     if (JSON.stringify(wifiList) != JSON.stringify(prevWifiList)) {
       console.log('wifiList ?', wifiList);
     } else {
-      console.log('Wifi did not change :-(');
+      console.log('Wifi did not change :(');
     }
   }
 
   render() {
-
     // Handle gpsLocation being undefined
     let gpsData;
     if(this.props.gpsLocation){
