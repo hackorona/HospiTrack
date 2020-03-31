@@ -20,7 +20,7 @@ shopt -s expand_aliases
 for PACKAGE in */; do
   echo "Handling package $PACKAGE"
   # Copy to proper location in node_modules
-  cp -vu ${PACKAGE}* ../node_modules/${PACKAGE}android
+  cp -v ${PACKAGE}* ../node_modules/${PACKAGE}android
 done
 
 echo "All packages repaired!"
