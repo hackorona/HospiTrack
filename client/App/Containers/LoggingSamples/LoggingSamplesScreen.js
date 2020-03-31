@@ -17,6 +17,8 @@ class LoggingSamplesScreen extends React.Component {
   }
   
   render() {
+    const { gpsErrorMessage, wifiErrorMessage } = this.props;
+
     return (
       <View
         style={[
@@ -33,6 +35,10 @@ class LoggingSamplesScreen extends React.Component {
             </View>
             <View style={Helpers.center}>
               <Text style={[Style.text]}>Thanks for helping us mapping the Hospital!</Text>
+              <View>
+                <Text style={Style.error}>{gpsErrorMessage ? `GPS: ${gpsErrorMessage}` : null}</Text>
+                <Text style={Style.error}>{wifiErrorMessage ? `WIFI: ${wifiErrorMessage}` : null}</Text>
+              </View>
                 {/* <Text style={Style.instructions}>
                   Hit the start, stop...
                 </Text> */}
@@ -55,7 +61,7 @@ LoggingSamplesScreen.propTypes = {
 
 const mapStateToProps = (state) => ({
   wifiErrorMessage: state.wifi.wifiListErrorMessage,
-  gpsLocationErrorMessage: state.gps.gpsLocationErrorMessage,
+  gpsErrorMessage: state.gps.gpsLocationErrorMessage && state.gps.gpsLocationErrorMessage.message,
 })
 
 const mapDispatchToProps = (dispatch) => ({
