@@ -1,8 +1,8 @@
 platform :ios, '9.0'
 require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
 
-target 'HospiTrackClient' do
-  # Pods for HospiTrackClient
+target 'HospiTrack' do
+  # Pods for HospiTrack
   pod 'FBLazyVector', :path => "../node_modules/react-native/Libraries/FBLazyVector"
   pod 'FBReactNativeSpec', :path => "../node_modules/react-native/Libraries/FBReactNativeSpec"
   pod 'RCTRequired', :path => "../node_modules/react-native/Libraries/RCTRequired"
@@ -33,15 +33,15 @@ target 'HospiTrackClient' do
   pod 'DoubleConversion', :podspec => '../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec'
   pod 'glog', :podspec => '../node_modules/react-native/third-party-podspecs/glog.podspec'
   pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
-  target 'HospiTrackClientTests' do
+  target 'HospiTrackTests' do
     inherit! :search_paths
     # Pods for testing
   end
   use_native_modules!
 end
-target 'HospiTrackClient-tvOS' do
-  # Pods for HospiTrackClient-tvOS
-  target 'HospiTrackClient-tvOSTests' do
+target 'HospiTrack-tvOS' do
+  # Pods for HospiTrack-tvOS
+  target 'HospiTrack-tvOSTests' do
     inherit! :search_paths
     # Pods for testing
   end
