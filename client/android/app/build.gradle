@@ -127,7 +127,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.hospitrack"
+        applicationId "com.hospitrackclient"
         minSdkVersion 21
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
