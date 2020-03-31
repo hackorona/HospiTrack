@@ -19,7 +19,7 @@ class RoomIdSelect extends React.Component {
     this.focusInputWithKeyboard()
   }
   
-  // Make keyboard pop open by focos on input element.
+  // Make keyboard pop open by focus on input element.
   focusInputWithKeyboard() {
     InteractionManager.runAfterInteractions(() => {
       this.inputRef.current.focus()
