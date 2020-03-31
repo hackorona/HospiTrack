@@ -75,7 +75,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   startSample: () => dispatch(SamplesActions.startSample()),
   clearRoomId: () => dispatch(SamplesActions.clearRoomId()),
-  setRoomId: () => dispatch(SamplesActions.setRoomId())
+  setRoomId: (roomId) => dispatch(SamplesActions.setRoomId(roomId))
 })
 
 export default connect(
