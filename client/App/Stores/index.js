@@ -4,6 +4,7 @@ import rootSaga from 'App/Sagas'
 import { reducer as WifiReducer } from './Wifi/Reducers';
 import { reducer as PermissionsReducer } from './Permissions/Reducers';
 import { reducer as GpsReducer } from './Gps/Reducers';
+import { reducer as SamplesReducer } from './Samples/Reducers';
 
 export default () => {
   const rootReducer = combineReducers({
@@ -13,7 +14,8 @@ export default () => {
      */
     wifi: WifiReducer,
     permissions: PermissionsReducer,
-    gps: GpsReducer
+    gps: GpsReducer,
+    samples: SamplesReducer,
   })
 
   return configureStore(rootReducer, rootSaga)
