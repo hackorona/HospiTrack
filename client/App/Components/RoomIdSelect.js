@@ -27,8 +27,13 @@ class RoomIdSelect extends React.Component {
   }
   
   onRoomIdChange = (roomId) => {
+    // Only modify if new roomId is number
+    if (isNaN(roomId)) {
+      return;
+    }
+
     this.setState({
-      roomId
+      roomId: roomId.trim()
     });
   }
 
@@ -47,6 +52,8 @@ class RoomIdSelect extends React.Component {
 
   render() {
     const { onSubmit, onRoomIdChange, clear, inputRef } = this;
+    const { roomId } = this.state;
+    const isDisabled = !roomId;
 
     return (
       <View>
@@ -55,7 +62,7 @@ class RoomIdSelect extends React.Component {
             placeholder="Enter Room ID"
             underlineColorAndroid='transparent'  
             style={[Helpers.textCenter, Fonts.normal]}
-            value={this.state.roomId}
+            value={roomId}
             onChangeText={(newVal) => onRoomIdChange(newVal)}
             keyboardType='numeric'
             ref={inputRef}
@@ -63,10 +70,10 @@ class RoomIdSelect extends React.Component {
         </View>
         <View style={[Helpers.row, Helpers.scrollSpaceBetween]}>
           <View style={{width: '40%'}}>
-            <Button title="OK" onPress={onSubmit}></Button>
+            <Button disabled={isDisabled} title="OK" onPress={onSubmit}></Button>
           </View>
           <View style={{width: '40%'}}>
-            <Button color="grey" title="clear" onPress={clear}></Button>
+            <Button disabled={isDisabled} color="grey" title="clear" onPress={clear}></Button>
           </View>
         </View>
       </View>
