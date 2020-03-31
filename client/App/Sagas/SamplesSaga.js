@@ -10,6 +10,8 @@ import { Platform } from 'react-native';
 
 const wifiListSelector = (state) => !state.wifi.sampleSent && state.wifi.wifiList;
 const gpsLocationSelector = (state) => !state.gps.sampleSent && state.gps.gpsLocation;
+const roomIdSelector = (state) => state.samples.roomId;
+
 const DELAY = 
 Platform.Version >= ANDROID10 ? ANDROID10_SAMPLE_DELAY : NEXT_SAMPLE_DELAY;
 
@@ -54,6 +56,7 @@ export function* sampleDataOnce() {
 
     const gpsDataForSample = yield call(gpsService.getGpsDataForSample, gps);
     const wifiDataForSample = yield call(wifiService.getWifiDataForSample, wifi);
+    const roomIdForSample = yield select(roomIdSelector);
 
     const sample = {
       // imei is coming from wifiService as it's temp.
@@ -61,6 +64,7 @@ export function* sampleDataOnce() {
       ...wifiDataForSample,
       // Time in ms
       timestamp: Date.now(),
+      roomId: roomIdForSample,
     };
 
     yield call(sendSample, sample);
