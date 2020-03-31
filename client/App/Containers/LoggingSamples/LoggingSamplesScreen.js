@@ -17,7 +17,7 @@ class LoggingSamplesScreen extends React.Component {
   }
   
   render() {
-    const { gpsErrorMessage, wifiErrorMessage } = this.props;
+    const { gpsErrorMessage, wifiErrorMessage, setRoomId, clearRoomId, savedRoomId } = this.props;
 
     return (
       <View
@@ -46,9 +46,9 @@ class LoggingSamplesScreen extends React.Component {
           </View>
           <View>
             <RoomIdSelect
-              onSubmit={(roomId) => console.log('this should change store with ' + roomId)}
-              onClear={() => console.log('this should clear on store')}
-              savedRoomId={9 /* here we should pass the roomId on store */}
+              onSubmit={(roomId) => setRoomId(roomId)}
+              onClear={clearRoomId}
+              savedRoomId={savedRoomId}
             />
           </View>
         </View>
@@ -60,16 +60,22 @@ class LoggingSamplesScreen extends React.Component {
 LoggingSamplesScreen.propTypes = {
   wifiErrorMessage: PropTypes.string,
   gpsLocationErrorMessage: PropTypes.string,
-  startSample: PropTypes.func.isRequired
+  startSample: PropTypes.func.isRequired,
+  savedRoomId: PropTypes.number,
+  clearRoomId: PropTypes.func.isRequired,
+  setRoomId: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = (state) => ({
   wifiErrorMessage: state.wifi.wifiListErrorMessage,
   gpsErrorMessage: state.gps.gpsLocationErrorMessage && state.gps.gpsLocationErrorMessage.message,
+  savedRoomId: state.samples.roomId
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  startSample: () => dispatch(SamplesActions.startSample())
+  startSample: () => dispatch(SamplesActions.startSample()),
+  clearRoomId: () => dispatch(SamplesActions.clearRoomId()),
+  setRoomId: () => dispatch(SamplesActions.setRoomId())
 })
 
 export default connect(
