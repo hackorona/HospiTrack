@@ -38,7 +38,7 @@ class RoomIdSelect extends React.Component {
       roomId
     });
     // Let container know we cleared.
-    this.props.onSubmit(roomId);
+    this.props.onClear();
   }
 
   onSubmit = () => {
@@ -76,7 +76,8 @@ class RoomIdSelect extends React.Component {
 }
 
 RoomIdSelect.propTypes = {
-  onSubmit: PropTypes.func.isRequired
+  onSubmit: PropTypes.func.isRequired,
+  onClear: PropTypes.func.isRequired
 };
 
 export default RoomIdSelect;

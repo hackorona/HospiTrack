@@ -45,7 +45,10 @@ class LoggingSamplesScreen extends React.Component {
             </View>
           </View>
           <View>
-            <RoomIdSelect onSubmit={(roomId) => console.log('this should change store with ' + roomId)}></RoomIdSelect>
+            <RoomIdSelect
+              onSubmit={(roomId) => console.log('this should change store with ' + roomId)}
+              onClear={() => console.log('this should clear on store')}
+            />
           </View>
         </View>
       </View>
