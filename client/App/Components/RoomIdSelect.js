@@ -1,10 +1,13 @@
 import React from 'react'
 import { View, Button } from 'react-native'
 import { Helpers, Fonts } from '../Theme';
-import { TextInput } from 'react-native';
+import { TextInput, InteractionManager } from 'react-native';
 import PropTypes from 'prop-types';
 
 class RoomIdSelect extends React.Component {
+  // Used to store reference to input element
+  inputRef = React.createRef();
+
   constructor(props) {
     super(props);
     this.state = {
@@ -12,6 +15,17 @@ class RoomIdSelect extends React.Component {
     }
   }
 
+  componentDidMount() {
+    this.focusInputWithKeyboard()
+  }
+  
+  // Make keyboard pop open by focos on input element.
+  focusInputWithKeyboard() {
+    InteractionManager.runAfterInteractions(() => {
+      this.inputRef.current.focus()
+    });
+  }
+  
   onRoomIdChange = (roomId) => {
     this.setState({
       roomId
@@ -32,7 +46,7 @@ class RoomIdSelect extends React.Component {
   }
 
   render() {
-    const { onSubmit } = this;
+    const { onSubmit, onRoomIdChange, clear, inputRef } = this;
 
     return (
       <View>
@@ -42,8 +56,9 @@ class RoomIdSelect extends React.Component {
             underlineColorAndroid='transparent'  
             style={[Helpers.textCenter, Fonts.normal]}
             value={this.state.roomId}
-            onChangeText={(newVal) => this.onRoomIdChange(newVal)}
+            onChangeText={(newVal) => onRoomIdChange(newVal)}
             keyboardType='numeric'
+            ref={inputRef}
           />
         </View>
         <View style={[Helpers.row, Helpers.scrollSpaceBetween]}>
@@ -51,7 +66,7 @@ class RoomIdSelect extends React.Component {
             <Button title="OK" onPress={onSubmit}></Button>
           </View>
           <View style={{width: '40%'}}>
-            <Button color="grey" title="clear" onPress={this.clear}></Button>
+            <Button color="grey" title="clear" onPress={clear}></Button>
           </View>
         </View>
       </View>
