@@ -87,7 +87,7 @@ class RoomIdSelect extends React.Component {
 RoomIdSelect.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   onClear: PropTypes.func.isRequired,
-  savedRoomId: PropTypes.number.isRequired
+  savedRoomId: PropTypes.number
 };
 
 export default RoomIdSelect;
