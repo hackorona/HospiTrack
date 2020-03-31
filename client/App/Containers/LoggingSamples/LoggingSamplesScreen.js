@@ -9,23 +9,13 @@ import RoomIdSelect from '../../Components/RoomIdSelect'
 
 class LoggingSamplesScreen extends React.Component {
   componentDidMount() {
+    this._fetchData();
   }
 
   _fetchData = () => {
     this.props.startSample();
   }
   
-  componentDidUpdate(prevProps) {
-    const {wifiList} = this.props;
-    const {wifiList: prevWifiList} = prevProps;
-    
-    if (JSON.stringify(wifiList) != JSON.stringify(prevWifiList)) {
-      console.log('wifiList ?', wifiList);
-    } else {
-      console.log('Wifi did not change :(');
-    }
-  }
-
   render() {
     return (
       <View
@@ -58,12 +48,18 @@ class LoggingSamplesScreen extends React.Component {
 }
 
 LoggingSamplesScreen.propTypes = {
+  wifiErrorMessage: PropTypes.string,
+  gpsLocationErrorMessage: PropTypes.string,
+  startSample: PropTypes.func.isRequired
 }
 
 const mapStateToProps = (state) => ({
+  wifiErrorMessage: state.wifi.wifiListErrorMessage,
+  gpsLocationErrorMessage: state.gps.gpsLocationErrorMessage,
 })
 
 const mapDispatchToProps = (dispatch) => ({
+  startSample: () => dispatch(SamplesActions.startSample())
 })
 
 export default connect(
