@@ -28,12 +28,12 @@ class RoomIdSelect extends React.Component {
   
   onRoomIdChange = (roomId) => {
     // Only modify if new roomId is number
-    if (isNaN(roomId)) {
+    if (isNaN(roomId) || parseInt(roomId) <= 0) {
       return;
     }
 
     this.setState({
-      roomId: roomId.trim()
+      roomId: parseInt(roomId)
     });
   }
 
@@ -53,7 +53,9 @@ class RoomIdSelect extends React.Component {
   render() {
     const { onSubmit, onRoomIdChange, clear, inputRef } = this;
     const { roomId } = this.state;
-    const isDisabled = !roomId;
+    const { savedRoomId } = this.props;
+    const isEmpty = !roomId;
+    const isSame = !isEmpty && roomId == savedRoomId;
 
     return (
       <View>
@@ -62,7 +64,7 @@ class RoomIdSelect extends React.Component {
             placeholder="Enter Room ID"
             underlineColorAndroid='transparent'  
             style={[Helpers.textCenter, Fonts.normal]}
-            value={roomId}
+            value={roomId && roomId.toString()}
             onChangeText={(newVal) => onRoomIdChange(newVal)}
             keyboardType='numeric'
             ref={inputRef}
@@ -70,10 +72,10 @@ class RoomIdSelect extends React.Component {
         </View>
         <View style={[Helpers.row, Helpers.scrollSpaceBetween]}>
           <View style={{width: '40%'}}>
-            <Button disabled={isDisabled} title="OK" onPress={onSubmit}></Button>
+            <Button disabled={isEmpty || isSame} title="OK" onPress={onSubmit}></Button>
           </View>
           <View style={{width: '40%'}}>
-            <Button disabled={isDisabled} color="grey" title="clear" onPress={clear}></Button>
+            <Button disabled={isEmpty} color="grey" title="clear" onPress={clear}></Button>
           </View>
         </View>
       </View>
@@ -84,7 +86,8 @@ class RoomIdSelect extends React.Component {
 
 RoomIdSelect.propTypes = {
   onSubmit: PropTypes.func.isRequired,
-  onClear: PropTypes.func.isRequired
+  onClear: PropTypes.func.isRequired,
+  savedRoomId: PropTypes.number.isRequired
 };
 
 export default RoomIdSelect;
