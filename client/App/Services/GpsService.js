@@ -11,7 +11,7 @@ function getGPSLocation() {
                   // See error code charts below.
                   reject(error);
               },
-              { enableHighAccuracy: true, timeout: GPS_TIMEOUT }
+              { enableHighAccuracy: true, timeout: GPS_TIMEOUT, maximumAge: 0}
   )});
 }
 
