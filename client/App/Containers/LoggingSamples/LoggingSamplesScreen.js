@@ -20,7 +20,7 @@ class LoggingSamplesScreen extends React.Component {
   componentDidUpdate(prevProps){
     if (this.props.sampleSent !== prevProps.sampleSent
       && this.props.sampleSent){
-        this.setState(prevState => {sampleCounter: prevState.sampleCounter+1});
+        this.setState(prevState => ({sampleCounter: prevState.sampleCounter+1}));
     }
 
     // Resets the counter when changing rooms
@@ -35,6 +35,7 @@ class LoggingSamplesScreen extends React.Component {
   
   render() {
     const { gpsErrorMessage, wifiErrorMessage, setRoomId, clearRoomId, savedRoomId } = this.props;
+    const { sampleCounter } = this.state;
     return (
       <View
         style={[
@@ -51,7 +52,7 @@ class LoggingSamplesScreen extends React.Component {
             </View>
             <View>
               <Text style={[Style.text]}>Thanks for helping us mapping the Hospital!</Text>
-              <Text style={[Style.counter]}>Scans: {this.state.sampleCounter}</Text>
+              <Text style={[Style.counter]}>Scans: {sampleCounter}</Text>
               <View>
                 <Text style={Style.error}>{gpsErrorMessage ? `GPS: ${gpsErrorMessage}` : null}</Text>
                 <Text style={Style.error}>{wifiErrorMessage ? `WIFI: ${wifiErrorMessage}` : null}</Text>
