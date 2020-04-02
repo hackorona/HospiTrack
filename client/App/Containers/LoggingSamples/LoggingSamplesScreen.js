@@ -8,6 +8,11 @@ import { Helpers, Images, Metrics } from '../../Theme'
 import RoomIdSelect from '../../Components/RoomIdSelect'
 
 class LoggingSamplesScreen extends React.Component {
+
+  state = {
+    sampleCounter: 0
+  }
+
   componentDidMount() {
     this._fetchData();
   }
@@ -15,7 +20,7 @@ class LoggingSamplesScreen extends React.Component {
   componentDidUpdate(prevProps){
     if (this.props.sampleSent !== prevProps.sampleSent
       && this.props.sampleSent){
-        this.setState({sampleCounter: this.state.sampleCounter+1});
+        this.setState(prevState => {sampleCounter: prevState.sampleCounter+1});
     }
 
     // Resets the counter when changing rooms
@@ -26,10 +31,6 @@ class LoggingSamplesScreen extends React.Component {
 
   _fetchData = () => {
     this.props.startSample();
-  }
-
-  state = {
-    sampleCounter: 0
   }
   
   render() {
@@ -48,7 +49,7 @@ class LoggingSamplesScreen extends React.Component {
             <View style={Style.logoContainer}>
               <Image source={Images.Location} resizeMode={'contain'} />
             </View>
-            <View >
+            <View>
               <Text style={[Style.text]}>Thanks for helping us mapping the Hospital!</Text>
               <Text style={[Style.counter]}>Scans: {this.state.sampleCounter}</Text>
               <View>
