@@ -4,8 +4,10 @@
   "private": true,
   "scripts": {
     "android": "react-native run-android",
-    "android:prerelease": "cd android-pre-release-gradles && ./script.sh && cd ..",
-    "android:release": "npm run android:prerelease && cd android && ./gradlew assembleRelease",
+    "android:prerelease": "rm -v app*.apk 2> /dev/null & cd android-pre-release-gradles && ./script.sh",
+    "android:release:main": "cd android && ./gradlew assembleRelease",
+    "android:apk-copy": "mkdir -p Release && cp -v ./android/app/build/outputs/apk/release/app-release.apk Release/app-$npm_package_version.apk && xdg-open Release",
+    "android:release": "npm run android:prerelease && npm run android:release:main && npm run android:apk-copy",
     "ios": "react-native run-ios",
     "start": "react-native start",
     "test": "jest --detectOpenHandles",
