@@ -7,7 +7,7 @@ const saveSample = async (data) => {
   try {
     const results = await promisesService.allSettled([
       writeLocally(data),
-      callToServer(data)
+      writeToServer(data)
     ]);
 
     const [ localResult, serverResult ] = results;
@@ -31,7 +31,7 @@ const saveSample = async (data) => {
 }
 
 // For now it always fails
-const callToServer = async (data) => Axios.post(
+const writeToServer = async (data) => Axios.post(
   // TODO: pass to consts
   'https://hospitrack-api-test.azurewebsites.net/api/insert-router-scan',
   data,
