@@ -27,7 +27,6 @@ def insert_router_scan():
         data['hospital_id'] = 'experiment'
     # TODO: client should always send hospital_id - when it does, delete line above
 
-    print(data)
     if data['room_id']:
         # if the data has a room_id -> insert it into the labeled table (for model training)
         new_labeled_router_scan = LabeledRouterScansController(imei=data['imei'],
