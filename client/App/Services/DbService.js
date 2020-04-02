@@ -41,39 +41,28 @@ const writeToServer = async (data) => Axios.post(
 
 // TODO: pass permissions or make it with try/catch not if else
 const writeLocally = async (Data) => {
-  const granted = await PermissionsAndroid.request(
-    PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE, {
-        title: "Grant file permissions",
-        message: "pretty please"
-    }
-  );
+    const path = fs.ExternalStorageDirectoryPath + '/data.txt';
 
-  if (granted === PermissionsAndroid.RESULTS.GRANTED){
-      console.log("Granted permission");
-      const path = fs.ExternalStorageDirectoryPath + '/data.txt';
-      
-      if (await fs.exists(path)){
-          fs.appendFile(path, JSON.stringify(Data) + ", ", 'utf8')
-              .then((success) => {
-              console.log('ADDED TO FILE! file: ' + path);
-              
-              })
-              .catch((err) => {
-              console.log(err.message);
-              });
-      } else {    
-          fs.writeFile(path, JSON.stringify(Data), 'utf8')
-          .then((success) => {
-          console.log('FILE CREATED! to: ' + path)
-          })
-          .catch((err) => {
-          console.log(err.message);
-          });
-      }
-  } else {
-      console.log("Where is my permission?");
-      throw new Error('No permission');
-  }
+    const isFileExist = await fs.exists(path);
+    
+    if (isFileExist) {
+        fs.appendFile(path, JSON.stringify(Data) + ", ", 'utf8')
+            .then((success) => {
+            console.log('ADDED TO FILE! file: ' + path);
+            
+            })
+            .catch((err) => {
+            console.log(err.message);
+            });
+    } else {    
+        fs.writeFile(path, JSON.stringify(Data), 'utf8')
+        .then((success) => {
+        console.log('FILE CREATED! to: ' + path)
+        })
+        .catch((err) => {
+        console.log(err.message);
+        });
+    }
 }
 
 export const dbService = {
