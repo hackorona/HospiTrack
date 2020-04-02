@@ -4,3 +4,4 @@ export const NEXT_SAMPLE_DELAY = ALWAYS_SAME_DELAY || 30000; // 4 scans in 2min 
 export const ANDROID10_SAMPLE_DELAY = ALWAYS_SAME_DELAY || 5000; // Android 10 gives option for more scans in dev settings
 export const ANDROID10_API_LEVEL = 29;
 export const GPS_TIMEOUT = NEXT_SAMPLE_DELAY;
+export const IS_DEV = __DEV__;
