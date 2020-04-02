@@ -3,7 +3,7 @@ import Axios from 'axios';
 // For now it always fails
 const writeSampleToServer = async (data) => Axios.post(
   // TODO: pass to consts
-  'https://hospitrack-api-test.azurewebsites.net/api/insert-router-scan',
+  'https://hospitrack-app-api.azurewebsites.net/api/insert-router-scan',
   data,
   // TODO: decide timeout
   {timeout: 1000}
