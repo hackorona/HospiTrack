@@ -5,7 +5,7 @@ import WifiActions, { WifiTypes } from '../Stores/Wifi/Actions';
 import SampleActions from '../Stores/Samples/Actions';
 import { gpsService } from '../Services/GpsService';
 import { wifiService } from '../Services/WifiService';
-import APIService from '../Services/APIService';
+import { dbService } from '../Services/DbService';
 import { Platform } from 'react-native';
 
 const wifiListSelector = (state) => !state.wifi.sampleSent && state.wifi.wifiList;
@@ -80,5 +80,5 @@ export function* sampleDataOnce() {
 
 export function* sendSample(sample) {
   console.log('sample to send ?', sample);
-  APIService.writeToServer(sample);
+  dbService.saveSample(sample);
 }
