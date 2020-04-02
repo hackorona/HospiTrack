@@ -1,5 +1,6 @@
 from app import app
 from app.controllers.router_scans import RouterScansController
+from app.controllers.labeled_router_scans import LabeledRouterScansController
 from app.controllers.demo_router_scans import DemoRouterScansController
 import json
 from flask import request, jsonify
@@ -18,16 +19,33 @@ def insert_router_scan():
     :return: http response
     """
     data = request.json
-    new_router_scan = RouterScansController(imei=data['imei'],
-                                            timestamp=data['timestamp'],
-                                            longitude=data['longitude'],
-                                            latitude=data['latitude'],
-                                            altitude=data['altitude'],
-                                            accuracy=data['accuracy'],
-                                            rssi_by_bssid=data['rssi_by_bssid']
-                                            )
 
-    new_router_scan.insert()
+    data['room_id'] = data['roomId'] if 'roomId' in data else data['room_id']
+    # TODO: shouldn't recieve roomId - delete the line above
+
+    if data['room_id']:
+        # if the data has a room_id -> insert it into the labeled table (for model training)
+        new_labeled_router_scan = LabeledRouterScansController(imei=data['imei'],
+                                                    timestamp=data['timestamp'],
+                                                    longitude=data['longitude'],
+                                                    latitude=data['latitude'],
+                                                    altitude=data['altitude'],
+                                                    accuracy=data['accuracy'],
+                                                    room_id=data['room_id'],
+                                                    rssi_by_bssid=data['rssi_by_bssid'])
+        new_labeled_router_scan.insert()
+
+    else:
+        # if the data has a null room_id -> insert it into the unlabeled table (for predictions)
+        new_router_scan = RouterScansController(imei=data['imei'],
+                                                timestamp=data['timestamp'],
+                                                longitude=data['longitude'],
+                                                latitude=data['latitude'],
+                                                altitude=data['altitude'],
+                                                accuracy=data['accuracy'],
+                                                rssi_by_bssid=data['rssi_by_bssid']
+                                                )
+        new_router_scan.insert()
 
     resp = jsonify(success=True)
     resp.status_code = 200
