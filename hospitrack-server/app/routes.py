@@ -21,8 +21,13 @@ def insert_router_scan():
     data = request.json
 
     data['room_id'] = data['roomId'] if 'roomId' in data else data['room_id']
-    # TODO: shouldn't recieve roomId - delete the line above
+    # TODO: shouldn't recieve roomId (only room_id) - delete the line above when it does
 
+    if 'hospital_id' not in data:
+        data['hospital_id'] = 'experiment'
+    # TODO: client should always send hospital_id - when it does, delete line above
+
+    print(data)
     if data['room_id']:
         # if the data has a room_id -> insert it into the labeled table (for model training)
         new_labeled_router_scan = LabeledRouterScansController(imei=data['imei'],
@@ -31,6 +36,7 @@ def insert_router_scan():
                                                     latitude=data['latitude'],
                                                     altitude=data['altitude'],
                                                     accuracy=data['accuracy'],
+                                                    hospital_id=data['hospital_id'],
                                                     room_id=data['room_id'],
                                                     rssi_by_bssid=data['rssi_by_bssid'])
         new_labeled_router_scan.insert()
@@ -43,8 +49,8 @@ def insert_router_scan():
                                                 latitude=data['latitude'],
                                                 altitude=data['altitude'],
                                                 accuracy=data['accuracy'],
-                                                rssi_by_bssid=data['rssi_by_bssid']
-                                                )
+                                                hospital_id=data['hospital_id'],
+                                                rssi_by_bssid=data['rssi_by_bssid'])
         new_router_scan.insert()
 
     resp = jsonify(success=True)
