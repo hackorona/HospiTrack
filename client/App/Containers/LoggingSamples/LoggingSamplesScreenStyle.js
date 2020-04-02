@@ -25,4 +25,10 @@ export default StyleSheet.create({
     marginBottom: Metrics.tiny,
     textAlign: 'center',
   },
+  counter: {
+    ...Fonts.normal,
+    fontSize: 30,
+    marginTop: '5%',
+    textAlign: 'center'
+  }
 })

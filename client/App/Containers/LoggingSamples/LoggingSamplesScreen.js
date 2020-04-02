@@ -48,12 +48,12 @@ class LoggingSamplesScreen extends React.Component {
             <View style={Style.logoContainer}>
               <Image source={Images.Location} resizeMode={'contain'} />
             </View>
-            <View style={Helpers.center}>
+            <View >
               <Text style={[Style.text]}>Thanks for helping us mapping the Hospital!</Text>
+              <Text style={[Style.counter]}>Scans: {this.state.sampleCounter}</Text>
               <View>
                 <Text style={Style.error}>{gpsErrorMessage ? `GPS: ${gpsErrorMessage}` : null}</Text>
                 <Text style={Style.error}>{wifiErrorMessage ? `WIFI: ${wifiErrorMessage}` : null}</Text>
-                <Text>{this.state.sampleCounter}</Text>
               </View>
                 {/* <Text style={Style.instructions}>
                   Hit the start, stop...
