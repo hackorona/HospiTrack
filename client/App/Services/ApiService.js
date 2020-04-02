@@ -1,12 +1,27 @@
 import Axios from 'axios';
-import { SERVER_URLS } from '../Consts';
+import { SERVER_URLS, API_TIMEOUT } from '../Consts';
 
-// For now it always fails
-const writeSampleToServer = async (data) => Axios.post(
-  SERVER_URLS.POST_SAMPLE,
+const METHODS = {
+  POST: 'POST',
+  GET: 'GET',
+  DELETE: 'DELETE',
+  PUT: 'PUT'
+};
+
+const apiCall = (method, url, data=undefined, config={}) => Axios({
+  method,
+  url,
   data,
-  // TODO: decide timeout
-  {timeout: 1000}
+  ...config
+})
+
+const writeSampleToServer = (sampleData) => apiCall(
+  METHODS.POST,
+  SERVER_URLS.POST_SAMPLE,
+  sampleData,
+  {
+    timeout: API_TIMEOUT
+  }
 );
 
 export const apiService = {
