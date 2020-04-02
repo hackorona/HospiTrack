@@ -1,4 +1,5 @@
 from app import app
+from app.utils.data_utils import set_default_values
 from app.controllers.router_scans import RouterScansController
 from app.controllers.labeled_router_scans import LabeledRouterScansController
 from app.controllers.demo_router_scans import DemoRouterScansController
@@ -23,9 +24,14 @@ def insert_router_scan():
     data['room_id'] = data['roomId'] if 'roomId' in data else data['room_id']
     # TODO: shouldn't recieve roomId (only room_id) - delete the line above when it does
 
-    if 'hospital_id' not in data:
-        data['hospital_id'] = 'experiment'
-    # TODO: client should always send hospital_id - when it does, delete line above
+    set_default_values(data=data,
+                      hospital_id='experiment',
+                      longitude=None,
+                      latitude=None,
+                      accuracy=None,
+                      altitude=None)
+    # TODO: client should always send hospital_id - when it does, delete it from line above
+
 
     if data['room_id']:
         # if the data has a room_id -> insert it into the labeled table (for model training)
