@@ -48,20 +48,20 @@ const writeLocally = async (Data) => {
     if (isFileExist) {
         fs.appendFile(path, JSON.stringify(Data) + ", ", 'utf8')
             .then((success) => {
-            console.log('ADDED TO FILE! file: ' + path);
+              console.log('ADDED TO FILE! file: ' + path);
             
             })
             .catch((err) => {
-            console.log(err.message);
-            });
+              console.log(err.message);
+        });
     } else {    
         fs.writeFile(path, JSON.stringify(Data), 'utf8')
-        .then((success) => {
-        console.log('FILE CREATED! to: ' + path)
-        })
-        .catch((err) => {
-        console.log(err.message);
-        });
+          .then((success) => {
+            console.log('FILE CREATED! to: ' + path)
+          })
+          .catch((err) => {
+            console.log(err.message);
+          });
     }
 }
 
