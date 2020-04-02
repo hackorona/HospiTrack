@@ -1,12 +1,13 @@
 import fs from 'react-native-fs';
 import Axios from 'axios';
 import { promisesService } from './PromisesService'
+import { apiService } from './ApiService'
 
 const saveSample = async (data) => {
   try {
     const results = await promisesService.allSettled([
       writeLocally(data),
-      writeToServer(data)
+      apiService.writeSampleToServer(data)
     ]);
 
     const [ localResult, serverResult ] = results;
@@ -28,15 +29,6 @@ const saveSample = async (data) => {
     console.error('allSettled failed. FIXME!');
   }
 }
-
-// For now it always fails
-const writeToServer = async (data) => Axios.post(
-  // TODO: pass to consts
-  'https://hospitrack-api-test.azurewebsites.net/api/insert-router-scan',
-  data,
-  // TODO: decide timeout
-  {timeout: 1000}
-);
 
 const writeLocally = async (data) => {
     const path = fs.ExternalStorageDirectoryPath + '/data.txt';
