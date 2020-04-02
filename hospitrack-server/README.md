@@ -1,5 +1,5 @@
 # HospiTrack Server
-To run the server locally, run HospiTrack\hospitrack-server\__init__.py
+To run the server locally, run C:\Users\ronbe\hospitrack\HospiTrack\hospitrack-server\app.py
 
 
 * inside app/models are all the models for tables in the database. Each model should be in a different file.

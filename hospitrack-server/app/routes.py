@@ -10,15 +10,14 @@ def test():
     return jsonify(success=True)
 
 
-@app.route('/api/insert-router-scan', methods=['POST'])
+@app.route('/api/insert-router-scan', methods=['POST', 'GET'])
 def insert_router_scan():
     """
     inserts a new router scan from a device into the database.
     gets the data from the request's payload from the client.
     :return: http response
     """
-
-    data = request.form
+    data = request.json
     new_router_scan = RouterScansController(imei=data['imei'],
                                             timestamp=data['timestamp'],
                                             longitude=data['longitude'],
