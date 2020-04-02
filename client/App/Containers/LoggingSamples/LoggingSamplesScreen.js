@@ -1,5 +1,5 @@
 import React from 'react'
-import { TouchableOpacity, Text, View, ScrollView, ActivityIndicator, Image } from 'react-native'
+import { Text, View, Image } from 'react-native'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import SamplesActions from '../../Stores/Samples/Actions'
@@ -8,8 +8,25 @@ import { Helpers, Images, Metrics } from '../../Theme'
 import RoomIdSelect from '../../Components/RoomIdSelect'
 
 class LoggingSamplesScreen extends React.Component {
+
+  state = {
+    sampleCounter: 0
+  }
+
   componentDidMount() {
     this._fetchData();
+  }
+
+  componentDidUpdate(prevProps){
+    if (this.props.sampleSent !== prevProps.sampleSent
+      && this.props.sampleSent){
+        this.setState(prevState => ({sampleCounter: prevState.sampleCounter+1}));
+    }
+
+    // Resets the counter when changing rooms
+    if (this.props.savedRoomId !== prevProps.savedRoomId){
+      this.setState({sampleCounter: 0});
+    }
   }
 
   _fetchData = () => {
@@ -18,7 +35,7 @@ class LoggingSamplesScreen extends React.Component {
   
   render() {
     const { gpsErrorMessage, wifiErrorMessage, setRoomId, clearRoomId, savedRoomId } = this.props;
-
+    const { sampleCounter } = this.state;
     return (
       <View
         style={[
@@ -33,8 +50,9 @@ class LoggingSamplesScreen extends React.Component {
             <View style={Style.logoContainer}>
               <Image source={Images.Location} resizeMode={'contain'} />
             </View>
-            <View style={Helpers.center}>
+            <View>
               <Text style={[Style.text]}>Thanks for helping us mapping the Hospital!</Text>
+              <Text style={[Style.counter]}>Scans: {sampleCounter}</Text>
               <View>
                 <Text style={Style.error}>{gpsErrorMessage ? `GPS: ${gpsErrorMessage}` : null}</Text>
                 <Text style={Style.error}>{wifiErrorMessage ? `WIFI: ${wifiErrorMessage}` : null}</Text>
@@ -64,12 +82,14 @@ LoggingSamplesScreen.propTypes = {
   savedRoomId: PropTypes.number,
   clearRoomId: PropTypes.func.isRequired,
   setRoomId: PropTypes.func.isRequired,
+  sampleSent: PropTypes.bool.isRequired,
 }
 
 const mapStateToProps = (state) => ({
   wifiErrorMessage: state.wifi.wifiListErrorMessage,
   gpsErrorMessage: state.gps.gpsLocationErrorMessage && state.gps.gpsLocationErrorMessage.message,
-  savedRoomId: state.samples.roomId
+  savedRoomId: state.samples.roomId,
+  sampleSent: state.wifi.sampleSent,
 })
 
 const mapDispatchToProps = (dispatch) => ({
