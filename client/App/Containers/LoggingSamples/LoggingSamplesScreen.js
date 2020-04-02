@@ -12,13 +12,28 @@ class LoggingSamplesScreen extends React.Component {
     this._fetchData();
   }
 
+  componentDidUpdate(prevProps){
+    if (this.props.sampleSent !== prevProps.sampleSent
+      && this.props.sampleSent){
+        this.setState({sampleCounter: this.state.sampleCounter+1});
+    }
+
+    // Resets the counter when changing rooms
+    if (this.props.savedRoomId !== prevProps.savedRoomId){
+      this.setState({sampleCounter: 0});
+    }
+  }
+
   _fetchData = () => {
     this.props.startSample();
+  }
+
+  state = {
+    sampleCounter: 0
   }
   
   render() {
     const { gpsErrorMessage, wifiErrorMessage, setRoomId, clearRoomId, savedRoomId } = this.props;
-
     return (
       <View
         style={[
@@ -38,6 +53,7 @@ class LoggingSamplesScreen extends React.Component {
               <View>
                 <Text style={Style.error}>{gpsErrorMessage ? `GPS: ${gpsErrorMessage}` : null}</Text>
                 <Text style={Style.error}>{wifiErrorMessage ? `WIFI: ${wifiErrorMessage}` : null}</Text>
+                <Text>{this.state.sampleCounter}</Text>
               </View>
                 {/* <Text style={Style.instructions}>
                   Hit the start, stop...
@@ -64,12 +80,14 @@ LoggingSamplesScreen.propTypes = {
   savedRoomId: PropTypes.number,
   clearRoomId: PropTypes.func.isRequired,
   setRoomId: PropTypes.func.isRequired,
+  sampleSent: PropTypes.bool.isRequired,
 }
 
 const mapStateToProps = (state) => ({
   wifiErrorMessage: state.wifi.wifiListErrorMessage,
   gpsErrorMessage: state.gps.gpsLocationErrorMessage && state.gps.gpsLocationErrorMessage.message,
-  savedRoomId: state.samples.roomId
+  savedRoomId: state.samples.roomId,
+  sampleSent: state.wifi.sampleSent,
 })
 
 const mapDispatchToProps = (dispatch) => ({
