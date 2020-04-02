@@ -3,9 +3,13 @@ import RNExitApp from 'react-native-exit-app';
 import OpenAppSettings from 'react-native-app-settings';
 
 const requestPermissions = async () => {
+  // TODO: we need to ask less permissions in the future.
+  // as the user might be afraid from so much permissions
+  // right on startup
   const permissionsToAsk = [
     PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-    PermissionsAndroid.PERMISSIONS.READ_PHONE_STATE
+    PermissionsAndroid.PERMISSIONS.READ_PHONE_STATE,
+    PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE
   ]
 
   const grantedResults = await PermissionsAndroid.requestMultiple(permissionsToAsk);
