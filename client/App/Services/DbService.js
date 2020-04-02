@@ -1,5 +1,4 @@
 import fs from 'react-native-fs';
-import { PermissionsAndroid } from 'react-native';
 import Axios from 'axios';
 import { promisesService } from './PromisesService'
 
@@ -39,41 +38,32 @@ const writeToServer = async (data) => Axios.post(
   {timeout: 1000}
 );
 
-// TODO: pass permissions or make it with try/catch not if else
-const writeLocally = async (Data) => {
-  const granted = await PermissionsAndroid.request(
-    PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE, {
-        title: "Grant file permissions",
-        message: "pretty please"
-    }
-  );
-
-  if (granted === PermissionsAndroid.RESULTS.GRANTED){
-      console.log("Granted permission");
-      const path = fs.ExternalStorageDirectoryPath + '/data.txt';
-      
-      if (await fs.exists(path)){
-          fs.appendFile(path, JSON.stringify(Data) + ", ", 'utf8')
-              .then((success) => {
-              console.log('ADDED TO FILE! file: ' + path);
-              
-              })
-              .catch((err) => {
-              console.log(err.message);
-              });
-      } else {    
-          fs.writeFile(path, JSON.stringify(Data), 'utf8')
-          .then((success) => {
-          console.log('FILE CREATED! to: ' + path)
+const writeLocally = async (data) => {
+    const path = fs.ExternalStorageDirectoryPath + '/data.txt';
+    const isFileExist = await fs.exists(path);
+    const dataToWrite = JSON.stringify(data) + ", ";
+    
+    if (isFileExist) {
+      return new Promise((res, rej) => {
+        fs.appendFile(path, dataToWrite, 'utf8')
+          .then(() => {
+            res('ADDED TO FILE! file: ' + path);
           })
           .catch((err) => {
-          console.log(err.message);
+            rej(err.message);
           });
-      }
-  } else {
-      console.log("Where is my permission?");
-      throw new Error('No permission');
-  }
+      })
+    } else {
+      return new Promise((res, rej) => {
+        fs.writeFile(path, dataToWrite, 'utf8')
+          .then(() => {
+            res('FILE CREATED! to: ' + path)
+          })
+          .catch((err) => {
+            rej(err.message);
+          });
+      });
+    }
 }
 
 export const dbService = {

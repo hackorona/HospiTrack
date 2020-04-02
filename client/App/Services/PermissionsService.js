@@ -3,32 +3,29 @@ import RNExitApp from 'react-native-exit-app';
 import OpenAppSettings from 'react-native-app-settings';
 
 const requestPermissions = async () => {
-  const grantedResult = await PermissionsAndroid.requestMultiple([
+  // TODO: we need to ask less permissions in the future.
+  // as the user might be afraid from so much permissions
+  // right on startup
+  const permissionsToAsk = [
     PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-    PermissionsAndroid.PERMISSIONS.READ_PHONE_STATE
-  ]);
-    // TODO: return to single request of location once getting rid of imei
-    // const grantedResult = await PermissionsAndroid.request(
-      // PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION
-      // {
-      //   title: 'Location permission is required for WiFi connections',
-      //   message:
-      //     'This app needs location permission as this is required  ' +
-      //     'to scan for wifi networks.',
-      //   buttonNegative: 'DENY',
-      //   buttonPositive: 'ALLOW',
-      // },
-    // );
+    PermissionsAndroid.PERMISSIONS.READ_PHONE_STATE,
+    PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE
+  ]
 
-  // return grantedResult;
-  return grantedResult['android.permission.ACCESS_FINE_LOCATION'];
+  const grantedResults = await PermissionsAndroid.requestMultiple(permissionsToAsk);
+
+  // Return only the results, without names of permissions
+  // as we accept all or nothing.
+  return Object.values(grantedResults);
 };
 
 const askPermissions = async () => { 
-  const granted = await requestPermissions();
+  const grantedResults = await requestPermissions();
   return {
-    granted: granted === PermissionsAndroid.RESULTS.GRANTED,
-    blocked: granted === PermissionsAndroid.RESULTS.NEVER_ASK_AGAIN
+    // Granted true only if *all* results are granted.
+    granted: grantedResults.every(res => res === PermissionsAndroid.RESULTS.GRANTED),
+    // Blocked true if even one result is blocked.
+    blocked: grantedResults.some(res => res === PermissionsAndroid.RESULTS.NEVER_ASK_AGAIN)
   };
 }
 
