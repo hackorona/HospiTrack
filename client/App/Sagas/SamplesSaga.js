@@ -56,7 +56,9 @@ export function* sampleDataOnce() {
 
     const gpsDataForSample = yield call(gpsService.getGpsDataForSample, gps);
     const wifiDataForSample = yield call(wifiService.getWifiDataForSample, wifi);
-    const roomIdForSample = yield select(roomIdSelector);
+    const roomDataForSample = {
+      room_id: yield select(roomIdSelector)
+    };
 
     const sample = {
       // imei is coming from wifiService as it's temp.
@@ -64,7 +66,7 @@ export function* sampleDataOnce() {
       ...wifiDataForSample,
       // Time in ms
       timestamp: Date.now(),
-      roomId: roomIdForSample,
+      ...roomDataForSample,
     };
 
     yield call(sendSample, sample);

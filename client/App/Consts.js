@@ -12,3 +12,5 @@ export const SERVER_URLS = {
   IS_ALIVE: SERVER_PREFIX_URL + '/test',
   POST_SAMPLE: SERVER_PREFIX_URL + '/insert-router-scan',
 }
+
+export const IS_DEV = __DEV__;

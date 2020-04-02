@@ -8,6 +8,7 @@ import { createLogger } from 'redux-logger';
  * (like API tokens, private and sensitive data, etc.).
  */
 import AsyncStorage from '@react-native-community/async-storage';
+import { IS_DEV } from '../Consts';
 
 const persistConfig = {
   key: 'root',
@@ -31,14 +32,20 @@ export default (rootReducer, rootSaga) => {
     },
     collapsed: () => true
   });
-  const middleware = [logger]
+  const middlewares = []
+
+  if (IS_DEV) {
+    // Add redux-logger on dev only.
+    middlewares.push(logger);
+  }
+
   const enhancers = []
 
   // Connect the sagas to the redux store
   const sagaMiddleware = createSagaMiddleware()
-  middleware.push(sagaMiddleware)
+  middlewares.push(sagaMiddleware)
 
-  enhancers.push(applyMiddleware(...middleware))
+  enhancers.push(applyMiddleware(...middlewares))
 
   // Redux persist
   const persistedReducer = persistReducer(persistConfig, rootReducer);

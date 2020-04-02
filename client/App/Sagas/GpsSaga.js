@@ -12,6 +12,5 @@ export function* fetchGpsLocation() {
     yield put(GpsActions.fetchGpsLocationSuccess(gpsLocation))
   } catch(e) {
     yield put(GpsActions.fetchGpsLocationFailure(e));
-    // TODO: for any error - we should put null result (at sending to db..)
   }
 }
