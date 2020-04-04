@@ -2,9 +2,9 @@ from app import Base
 from sqlalchemy import Column, String, BigInteger, Float, Integer, JSON
 import json
 
-class RouterScans(Base):
+class LabeledRouterScans(Base):
 
-    __tablename__ = 'router_scans'
+    __tablename__ = 'labeled_router_scans'
     id = Column(Integer, primary_key=True )
     imei = Column(String, nullable=False)
     timestamp = Column(BigInteger, nullable=False)
@@ -13,10 +13,11 @@ class RouterScans(Base):
     altitude = Column(Float, nullable=True)
     accuracy = Column(Float, nullable=True)
     hospital_id = Column(String, nullable=False)
+    room_id = Column(String, nullable=False)
     rssi_by_bssid = Column(JSON, nullable=False)
 
 
-    def __init__(self, imei, timestamp, longitude, latitude, altitude, accuracy, hospital_id, rssi_by_bssid):
+    def __init__(self, imei, timestamp, longitude, latitude, altitude, accuracy, hospital_id, room_id, rssi_by_bssid):
         self.imei = imei
         self.timestamp = timestamp
         self.longitude = longitude
@@ -24,6 +25,7 @@ class RouterScans(Base):
         self.altitude = altitude
         self.accuracy = accuracy
         self.hospital_id = hospital_id
+        self.room_id = room_id
         self.rssi_by_bssid = rssi_by_bssid
 
         if isinstance(self.rssi_by_bssid, str):
