@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "android": "react-native run-android",
+    "android": "react-native run-android && npm run start",
     "android:prerelease": "cd android-pre-release-gradles && ./script.sh && cd ..",
     "android:release": "npm run android:prerelease && cd android && ./gradlew assembleRelease",
     "ios": "react-native run-ios",
