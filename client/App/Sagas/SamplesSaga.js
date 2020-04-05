@@ -7,6 +7,7 @@ import { gpsService } from '../Services/GpsService';
 import { wifiService } from '../Services/WifiService';
 import { dbService } from '../Services/DbService';
 import { Platform } from 'react-native';
+import { phoneService } from '../Services/PhoneService';
 
 const wifiListSelector = (state) => !state.wifi.sampleSent && state.wifi.wifiList;
 const gpsLocationSelector = (state) => !state.gps.sampleSent && state.gps.gpsLocation;
@@ -59,11 +60,12 @@ export function* sampleDataOnce() {
     const roomDataForSample = {
       room_id: yield select(roomIdSelector)
     };
+    const phoneDataForSample = yield call(phoneService.getPhoneDataForSample);
 
     const sample = {
-      // imei is coming from wifiService as it's temp.
       ...gpsDataForSample,
       ...wifiDataForSample,
+      ...phoneDataForSample,
       // Time in ms
       timestamp: Date.now(),
       ...roomDataForSample,
