@@ -1,5 +1,5 @@
 import Axios from 'axios';
-import { SERVER_URLS, API_TIMEOUT } from '../Consts';
+import { SERVER_URLS, API_TIMEOUT, SERVER_AUTH } from '../Consts';
 
 const METHODS = {
   POST: 'POST',
@@ -15,14 +15,21 @@ const apiCall = (method, url, data=undefined, config={}) => Axios({
   ...config
 })
 
-const writeSampleToServer = (sampleData) => apiCall(
-  METHODS.POST,
-  SERVER_URLS.POST_SAMPLE,
-  sampleData,
-  {
-    timeout: API_TIMEOUT
+const writeSampleToServer = (sampleData) => {
+  const data = {
+    ...SERVER_AUTH,
+    ...sampleData
   }
-);
+
+  return apiCall(
+    METHODS.POST,
+    SERVER_URLS.POST_SAMPLE,
+    data,
+    {
+      timeout: API_TIMEOUT
+    }
+  );
+}
 
 export const apiService = {
   writeSampleToServer
