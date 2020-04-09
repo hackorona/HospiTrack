@@ -9,10 +9,10 @@ export const ANDROID10_API_LEVEL = 29;
 export const GPS_TIMEOUT = NEXT_SAMPLE_DELAY;
 export const API_TIMEOUT = NEXT_SAMPLE_DELAY;
 
-const SERVER_PREFIX_URL = 'https://hospitrack-app-api.azurewebsites.net/api';
+const SERVER_PREFIX_URL = 'http://www.wize-web.com/talproject';
 export const SERVER_URLS = {
-  IS_ALIVE: SERVER_PREFIX_URL + '/test',
-  POST_SAMPLE: SERVER_PREFIX_URL + '/insert-router-scan',
+  // IS_ALIVE: SERVER_PREFIX_URL + '/test',
+  POST_SAMPLE: SERVER_PREFIX_URL// + '/insert-router-scan',
 }
 export const SERVER_AUTH = {
   UserName: SERVER_USERNAME,
