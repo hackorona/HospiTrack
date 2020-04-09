@@ -60,3 +60,6 @@ buck-out/
 
 # Release
 /Release
+
+# env files
+.env
