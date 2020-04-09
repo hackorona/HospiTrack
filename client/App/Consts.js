@@ -1,3 +1,5 @@
+import { SERVER_USERNAME, SERVER_PASSWORD } from 'react-native-dotenv'
+
 export const REPEAT_LOCATION_SCAN_TIMES = 10;
 const ALWAYS_SAME_DELAY = 3000;
 export const NEXT_SAMPLE_DELAY = ALWAYS_SAME_DELAY || 30000; // 4 scans in 2min is Google's limitation
@@ -11,6 +13,10 @@ const SERVER_PREFIX_URL = 'https://hospitrack-app-api.azurewebsites.net/api';
 export const SERVER_URLS = {
   IS_ALIVE: SERVER_PREFIX_URL + '/test',
   POST_SAMPLE: SERVER_PREFIX_URL + '/insert-router-scan',
+}
+export const SERVER_AUTH = {
+  UserName: SERVER_USERNAME,
+  Password: SERVER_PASSWORD
 }
 
 export const IS_DEV = __DEV__;
