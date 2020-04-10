@@ -12,7 +12,7 @@ export const API_TIMEOUT = NEXT_SAMPLE_DELAY;
 const SERVER_PREFIX_URL = 'http://www.wize-web.com/talproject';
 export const SERVER_URLS = {
   // IS_ALIVE: SERVER_PREFIX_URL + '/test',
-  POST_SAMPLE: SERVER_PREFIX_URL// + '/insert-router-scan',
+  POST_SAMPLE: SERVER_PREFIX_URL + '/AddOne.asp',
 }
 export const SERVER_AUTH = {
   UserName: SERVER_USERNAME,
