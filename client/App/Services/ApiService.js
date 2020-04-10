@@ -26,7 +26,10 @@ const writeSampleToServer = (sampleData) => {
     SERVER_URLS.POST_SAMPLE,
     data,
     {
-      timeout: API_TIMEOUT
+      timeout: API_TIMEOUT,
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      }
     }
   );
 }
