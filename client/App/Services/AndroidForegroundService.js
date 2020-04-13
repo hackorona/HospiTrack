@@ -9,6 +9,7 @@ const channelConfig = {
 VIForegroundService.createNotificationChannel(channelConfig);
 
 export async function startForegroundService(){
+    console.log("Hooray! Foreground! background stuff")
     const notificationConfig = {
         channelId: 'channelId',
         id: 3456,
@@ -22,7 +23,6 @@ export async function startForegroundService(){
         console.error(e);
     }
 }
-
 export const AndroideForegroundService = {
     startForegroundService
 }
