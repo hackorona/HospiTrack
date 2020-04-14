@@ -18,11 +18,15 @@ export async function startForegroundService(){
         icon: 'ic_icon'
     };
     try {
-        await VIForegroundService.startService(notificationConfig);
+      console.log('inside try');
+      // console.time('start-service');
+      await VIForegroundService.startService(notificationConfig);
+      // console.timeEnd('start-service');
+      console.log('started service successfuly!');
     } catch (e) {
         console.error(e);
     }
 }
-export const AndroideForegroundService = {
+export const AndroidForegroundService = {
     startForegroundService
 }
