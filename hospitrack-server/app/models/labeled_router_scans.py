@@ -6,8 +6,8 @@ class LabeledRouterScans(Base):
 
     __tablename__ = 'labeled_router_scans'
     id = Column(Integer, primary_key=True )
-    imei = Column(String, nullable=False)
-    timestamp = Column(BigInteger, nullable=False)
+    imei = Column(String, nullable=False, index=True)
+    timestamp = Column(BigInteger, nullable=False, index=True)
     longitude = Column(Float, nullable=True)
     latitude = Column(Float, nullable=True)
     altitude = Column(Float, nullable=True)
