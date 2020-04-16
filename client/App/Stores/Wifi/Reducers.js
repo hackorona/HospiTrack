@@ -7,11 +7,13 @@
 import { INITIAL_STATE } from './InitialState'
 import { createReducer } from 'reduxsauce'
 import { WifiTypes } from './Actions'
+import { SamplesTypes } from '../Samples/Actions'
 
 export const fetchWifiListLoading = (state) => ({
   ...state,
   wifiListIsLoading: true,
   wifiListErrorMessage: null,
+  sampleSent: false
 })
 
 export const fetchWifiListSuccess = (state, payload) => ({
@@ -23,10 +25,15 @@ export const fetchWifiListSuccess = (state, payload) => ({
 
 export const fetchWifiListFailure = (state, { errorMessage }) => ({
   ...state,
-  wifiList: {},
+  wifiList: INITIAL_STATE.wifiList,
   wifiListIsLoading: false,
   wifiListErrorMessage: errorMessage,
 })
+
+export const sampleSent = (state) => ({
+  ...state,
+  sampleSent: true
+});
 
 /**
  * @see https://github.com/infinitered/reduxsauce#createreducer
@@ -35,4 +42,5 @@ export const reducer = createReducer(INITIAL_STATE, {
   [WifiTypes.FETCH_WIFI_LIST_LOADING]: fetchWifiListLoading,
   [WifiTypes.FETCH_WIFI_LIST_SUCCESS]: fetchWifiListSuccess,
   [WifiTypes.FETCH_WIFI_LIST_FAILURE]: fetchWifiListFailure,
+  [SamplesTypes.SAMPLE_SENT]: sampleSent
 })

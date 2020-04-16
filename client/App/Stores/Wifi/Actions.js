@@ -19,11 +19,11 @@ import { createActions } from 'reduxsauce'
  * @see https://github.com/infinitered/reduxsauce#createactions
  */
 const { Types, Creators } = createActions({
-  // Fetch user informations
+  // Fetch wifi information
   fetchWifiList: null,
   // The operation has started and is loading
   fetchWifiListLoading: null,
-  // User informations were successfully fetched
+  // Wifi informations were successfully fetched
   fetchWifiListSuccess: ['wifiArr'],
   // An error occurred
   fetchWifiListFailure: ['errorMessage'],
