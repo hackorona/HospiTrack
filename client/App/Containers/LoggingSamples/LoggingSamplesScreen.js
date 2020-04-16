@@ -1,5 +1,5 @@
 import React from 'react'
-import { Text, View, Image } from 'react-native'
+import { Text, View, Image, Button } from 'react-native'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import SamplesActions from '../../Stores/Samples/Actions'
