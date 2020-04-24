@@ -1,45 +1,13 @@
+/* eslint-disable prettier/prettier */
 import React, { Component } from 'react'
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/lib/integration/react'
 import createStore from './Stores'
 import RootScreen from './Containers/Root/RootScreen'
-import ForegroundService from 'react-native-foreground-service';
 import { Button } from 'react-native'
+import { stopForegroundService } from './Services/AndroidForegroundService'
 
 const { store, persistor } = createStore();
-
-let resolveFunc;
-
-const foregroundTask = async (data) => {
-  return new Promise((resolve) => {
-    resolveFunc = () => {
-      console.warn('resolveFunc()');
-      resolve();
-    };
-  });
-}
-
-ForegroundService.registerForegroundTask("myTaskName", foregroundTask);
-
-const notificationConfig = {
-  id: 3,
-  title: 'Service',
-  message: `blah message`,
-  visibility: 'public',
-  importance: 'low',
-  number: 55
-};
-
-const func = async () => {
-  await ForegroundService.startService(notificationConfig);
-  
-  await ForegroundService.runTask({
-    taskName: 'myTaskName',
-    delay: 0
-  });
-}
-
-func();
 
 export default class App extends Component {
   render() {
@@ -59,8 +27,8 @@ export default class App extends Component {
           <RootScreen />
           <Button title="Stop working" onPress={() => {
             console.log('clicked');
-            console.log('resolveFunc ?', resolveFunc);
-            resolveFunc();
+            console.log('stopForegroundService ?', stopForegroundService);
+            stopForegroundService();
           }}></Button>
         </PersistGate>
       </Provider>
