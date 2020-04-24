@@ -24,7 +24,7 @@ export default class App extends Component {
          */}
         <PersistGate loading={null} persistor={persistor}>
           <RootScreen />
-          <Button title="Stop working" onPress={AndroidForegroundService.stopForegroundService}></Button>
+          <Button title="Stop working in background" onPress={AndroidForegroundService.stopForegroundService}></Button>
         </PersistGate>
       </Provider>
     )
