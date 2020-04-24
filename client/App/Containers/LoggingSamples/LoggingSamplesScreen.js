@@ -1,11 +1,12 @@
 import React from 'react'
-import { Text, View, Image } from 'react-native'
+import { Text, View, Image, Button } from 'react-native'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import SamplesActions from '../../Stores/Samples/Actions'
 import Style from './LoggingSamplesScreenStyle'
 import { Helpers, Images, Metrics } from '../../Theme'
 import RoomIdSelect from '../../Components/RoomIdSelect'
+import NavigationService from '../../Services/NavigationService'
 
 class LoggingSamplesScreen extends React.Component {
 
@@ -49,6 +50,8 @@ class LoggingSamplesScreen extends React.Component {
           <View>
             <View style={Style.logoContainer}>
               <Image source={Images.Location} resizeMode={'contain'} />
+              {/* Temp... */}
+              <Button title="Start Flow" onPress={() => NavigationService.navigate('WizardScreen')}></Button>
             </View>
             <View>
               <Text style={[Style.text]}>Thanks for helping us mapping the Hospital!</Text>
