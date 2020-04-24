@@ -8,20 +8,11 @@ import { Platform } from 'react-native'
  * The startup saga is the place to define behavior to execute when the application starts.
  */
 export function* startup() {
-  // We can see if android or ios!
-  const platformMsg = Platform.select({
-    ios: 'This is ios',
-    android: 'This is android',
-  });
-
-  console.log('platformMsg ?', platformMsg);
-
-  // Add more operations you need to do at startup here
   // Splash screen is shown till navigateAndReset is called ad end of this saga
   // ...
   yield put(PermissionsActions.permissionsRequest());
 
-  // App moves to main screen on permissions granted.
+  // App moves to a screen on permissionsUpdate saga.
 }
 
 export function* permissionsRequest() {
@@ -29,12 +20,8 @@ export function* permissionsRequest() {
   const permissionsStatus = yield call(permissionsService.askPermissions);
 
   // let store know permissions status
+  // and wait for permissionsUpdate saga to be triggered
   yield put(PermissionsActions.permissionsUpdate(permissionsStatus));
-
-  // w/o location permissions, app is useless. go to NoPermissionsScreen
-  // and beg user to grant permissions.
-  if (!permissionsStatus.granted)
-    return NavigationService.navigateAndReset('NoPermissionsScreen')
 }
 
 export function* permissionsUpdate() {
@@ -43,5 +30,9 @@ export function* permissionsUpdate() {
   if (isGranted) {
     // When those operations are finished we redirect to the main screen
     NavigationService.navigateAndReset('MainScreen')
+  } else {
+    // w/o location permissions, app is useless. go to NoPermissionsScreen
+    // and beg user to grant permissions.
+    return NavigationService.navigateAndReset('NoPermissionsScreen')
   }
 }
