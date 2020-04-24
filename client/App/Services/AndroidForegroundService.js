@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import ForegroundService from 'react-native-foreground-service';
 
 const TASK_NAME = 'dataSample';
