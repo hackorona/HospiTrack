@@ -1,10 +1,12 @@
 import React, { Component } from 'react'
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/lib/integration/react'
-import createStore from 'App/Stores'
+import createStore from './Stores'
 import RootScreen from './Containers/Root/RootScreen'
+import { Button } from 'react-native'
+import { AndroidForegroundService } from './Services/AndroidForegroundService'
 
-const { store, persistor } = createStore()
+const { store, persistor } = createStore();
 
 export default class App extends Component {
   render() {
@@ -22,6 +24,7 @@ export default class App extends Component {
          */}
         <PersistGate loading={null} persistor={persistor}>
           <RootScreen />
+          <Button title="Stop working in background" onPress={AndroidForegroundService.stopForegroundService}></Button>
         </PersistGate>
       </Provider>
     )
