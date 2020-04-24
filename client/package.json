@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "android": "react-native run-android && npm run start",
-    "android:prerelease": "rm -v app*.apk 2> /dev/null & cd android-pre-release-gradles && ./script.sh",
+    "android:prerelease": "rm -v Release/app*.apk 2> /dev/null & cd android-pre-release-gradles && ./script.sh",
     "android:release:main": "cd android && ./gradlew assembleRelease",
     "android:apk-copy": "mkdir -p Release && cp -v ./android/app/build/outputs/apk/release/app-release.apk Release/app-$npm_package_version-$(date '+%d-%m-%y').apk && xdg-open Release && xdg-open http://bit.ly/hospitrackapk >> /dev/null",
     "android:release": "npm run android:prerelease && npm run android:release:main && npm run android:apk-copy",
