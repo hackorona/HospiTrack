@@ -23,7 +23,7 @@ export function* startup() {
   yield put(PermissionsActions.permissionsRequest());
   // App moves to main screen on permissions granted.
 
-  // Make scans work in background
+  // Make app work in background
   yield call(AndroidForegroundService.initForegroundService);
 }
 
