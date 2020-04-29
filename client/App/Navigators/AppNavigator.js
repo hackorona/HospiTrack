@@ -3,6 +3,7 @@ import NoPermissionsScreen from '../Containers/NoPermissionsScreen/NoPermissions
 import DataScreen from '../Containers/Data/DataScreen'
 import SplashScreen from '../Containers/SplashScreen/SplashScreen'
 import LoggingSamplesScreen from '../Containers/LoggingSamples/LoggingSamplesScreen'
+import WizardScreen from '../Containers/WizardScreen/WizardScreen'
 
 /**
  * The root screen contains the application's navigation.
@@ -15,6 +16,7 @@ const StackNavigator = createStackNavigator(
     SplashScreen: SplashScreen,
     // Make main screen loggingSamples for now
     MainScreen: LoggingSamplesScreen,
+    WizardScreen,
     DataScreen,
     NoPermissionsScreen,
     LoggingSamplesScreen

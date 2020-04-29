@@ -1,12 +1,12 @@
 {
   "name": "HospiTrackClient",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "private": true,
   "scripts": {
-    "android": "react-native run-android",
-    "android:prerelease": "rm -v app*.apk 2> /dev/null & cd android-pre-release-gradles && ./script.sh",
+    "android": "react-native run-android && npm run start",
+    "android:prerelease": "rm -v Release/app*.apk 2> /dev/null & cd android-pre-release-gradles && ./script.sh",
     "android:release:main": "cd android && ./gradlew assembleRelease",
-    "android:apk-copy": "mkdir -p Release && cp -v ./android/app/build/outputs/apk/release/app-release.apk Release/app-$npm_package_version.apk && xdg-open Release",
+    "android:apk-copy": "mkdir -p Release && cp -v ./android/app/build/outputs/apk/release/app-release.apk Release/app-$npm_package_version-$(date '+%d-%m-%y').apk && xdg-open Release && xdg-open http://bit.ly/hospitrackapk >> /dev/null",
     "android:release": "npm run android:prerelease && npm run android:release:main && npm run android:apk-copy",
     "ios": "react-native run-ios",
     "start": "react-native start",
@@ -20,6 +20,7 @@
   },
   "dependencies": {
     "@react-native-community/async-storage": "^1.8.1",
+    "react-native-foreground-service": "github:cristianoccazinsp/react-native-foreground-service",
     "axios": "^0.19.0",
     "prop-types": "^15.7.2",
     "react": "16.9.0",
