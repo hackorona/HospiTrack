@@ -2,6 +2,7 @@ from app import app
 from app.utils.data_utils import set_default_values
 from app.controllers.router_scans import RouterScansController
 from app.controllers.labeled_router_scans import LabeledRouterScansController
+from app.utils.predict import predict
 from flask import request, jsonify
 
 
@@ -18,8 +19,9 @@ def insert_router_scan():
     :return: http response
     """
     data = request.json
-
-    data['room_id'] = data['roomId'] if 'roomId' in data else data['room_id']
+    print(data)
+    if 'room_id' in data or 'roomId' in data:
+        data['room_id'] = data['roomId'] if 'roomId' in data else data['room_id']
     # TODO: shouldn't recieve roomId (only room_id) - delete the line above when it does
 
     set_default_values(data=data,
@@ -27,7 +29,8 @@ def insert_router_scan():
                       longitude=None,
                       latitude=None,
                       accuracy=None,
-                      altitude=None)
+                      altitude=None,
+                      room_id=None)
     # TODO: client should always send hospital_id - when it does, delete it from line above
 
 
@@ -46,6 +49,8 @@ def insert_router_scan():
 
     else:
         # if the data has a null room_id -> insert it into the unlabeled table (for predictions)
+        predicted_room_id = predict(data['hospital_id'], data['rssi_by_bssid'])
+
         new_router_scan = RouterScansController(imei=data['imei'],
                                                 timestamp=data['timestamp'],
                                                 longitude=data['longitude'],
@@ -55,6 +60,7 @@ def insert_router_scan():
                                                 hospital_id=data['hospital_id'],
                                                 rssi_by_bssid=data['rssi_by_bssid'])
         new_router_scan.insert()
+        return "predicted room: " + str(predicted_room_id)
 
     resp = jsonify(success=True)
     resp.status_code = 200
