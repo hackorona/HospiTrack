@@ -11,7 +11,7 @@ class ScanningScreen extends React.Component {
     const { isScanning, startSampling, stopSampling } = this.props;
 
     const helperText = isScanning ? 
-      'לא לשכוח ללחוץ ביציאה!' : 'לחצו על הכפתור כשאתם נכנסים לבסיס וכשאתם יוצאים :) ככה נוודא שלא נחשפתם לנגיף'
+      'לא לשכוח ללחוץ ביציאה!' : 'לחצו על הכפתור כשאתם נכנסים לבסיס וכשאתם יוצאים\n\nככה נוודא שלא נחשפתם לנגיף'
 
     return (
       <View

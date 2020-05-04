@@ -42,22 +42,13 @@ export default function GrantPermissionBody(props) {
         {btnTitle}
       </Button>
       <Image source={Images.Location}></Image>
-      <View>
-        <Text style={[
-            Fonts.h4,
-            Helpers.textCenter,
-            Metrics.horizontalPadding
-          ]}>
-            תודה על שיתוף הפעולה.
-        </Text>
-        <Text style={[
-            Fonts.h4,
-            Helpers.textCenter,
-            Metrics.horizontalPadding
-          ]}>
-            אם נתקלתם בבאגים או כל בעיה, אנא דווחו לצוות באומן
-        </Text>
-      </View>
+      <Text style={[
+          Fonts.h4,
+          Helpers.textCenter,
+          Metrics.horizontalPadding
+        ]}>
+          {`תודה על שיתוף הפעולה.\nאם נתקלתם בבאגים או כל בעיה, אנא דווחו לצוות באומן`}
+      </Text>
     </View>
   );
 }
