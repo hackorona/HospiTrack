@@ -8,6 +8,7 @@ import { wifiService } from '../Services/WifiService';
 import { dbService } from '../Services/DbService';
 import { Platform } from 'react-native';
 import { phoneService } from '../Services/PhoneService';
+import { AndroidForegroundService } from '../Services/AndroidForegroundService';
 
 const wifiListSelector = (state) => !state.wifi.sampleSent && state.wifi.wifiList;
 const gpsLocationSelector = (state) => !state.gps.sampleSent && state.gps.gpsLocation;
@@ -15,6 +16,20 @@ const roomIdSelector = (state) => state.samples.roomId;
 
 const DELAY = 
 Platform.Version >= ANDROID10 ? ANDROID10_SAMPLE_DELAY : NEXT_SAMPLE_DELAY;
+
+export function startSampling(isBg = true) {
+  const task = yield fork(sampleData);
+  
+  // Make app work in background
+  if (isBg) yield call(AndroidForegroundService.initForegroundService);
+
+  yield take('STOP_SAMPLING');
+
+  // TODO: add yield?
+  if (task) cancel(task);
+
+  if (isBg) yield call(AndroidForegroundService.stopForegroundService)
+}
 
 export function* sampleData() {
   while (true) {

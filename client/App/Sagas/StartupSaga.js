@@ -2,8 +2,6 @@ import { put, call, select } from 'redux-saga/effects'
 import PermissionsActions from '../Stores/Permissions/Actions'
 import { permissionsService } from '../Services/PermissionsService'
 import NavigationService from '../Services/NavigationService'
-import { Platform } from 'react-native'
-import { AndroidForegroundService } from '../Services/AndroidForegroundService'
 
 /**
  * The startup saga is the place to define behavior to execute when the application starts.
@@ -11,9 +9,6 @@ import { AndroidForegroundService } from '../Services/AndroidForegroundService'
 export function* startup() {
   // Splash screen is shown till navigateAndReset is called at permissionsUpdate saga
   yield put(PermissionsActions.permissionsRequest());
-
-  // Make app work in background
-  yield call(AndroidForegroundService.initForegroundService);
 }
 
 export function* permissionsRequest() {

@@ -6,7 +6,7 @@ import { startup, permissionsUpdate, permissionsRequest } from './StartupSaga'
 import { fetchWifiList } from './WifiSaga'
 import { fetchGpsLocation } from './GpsSaga'
 import { GpsTypes } from '../Stores/Gps/Actions'
-import { sampleData } from './SamplesSaga'
+import { startSampling } from './SamplesSaga'
 import { SamplesTypes } from '../Stores/Samples/Actions';
 
 export default function* root() {
@@ -20,6 +20,6 @@ export default function* root() {
     takeLatest(PermissionsTypes.PERMISSIONS_UPDATE, permissionsUpdate),
     takeLatest(WifiTypes.FETCH_WIFI_LIST, fetchWifiList),
     takeLatest(GpsTypes.FETCH_GPS_LOCATION, fetchGpsLocation),
-    takeLatest(SamplesTypes.START_SAMPLE, sampleData)
+    takeLatest(SamplesTypes.START_SAMPLE, startSampling)
   ])
 }
