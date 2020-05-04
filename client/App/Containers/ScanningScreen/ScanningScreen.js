@@ -11,7 +11,7 @@ class ScanningScreen extends React.Component {
     const { isScanning, startSampling, stopSampling } = this.props;
 
     const helperText = isScanning ? 
-      'You can stop scanning any time' : 'Press button to start scanning!'
+      'לא לשכוח ללחוץ ביציאה!' : 'לחצו על הכפתור כשאתם נכנסים לבסיס וכשאתם יוצאים :) ככה נוודא שלא נחשפתם לנגיף'
 
     return (
       <View
@@ -21,7 +21,7 @@ class ScanningScreen extends React.Component {
       >
         <SampleBody
           helperText={helperText}
-          btnTitle={isScanning ? 'stop': 'start'}
+          btnTitle={isScanning ? 'עצור': 'התחל'}
           btnAction={isScanning ? stopSampling : startSampling}/>
       </View>
     )
