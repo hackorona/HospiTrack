@@ -21,7 +21,7 @@ export function* startSampling(isBg = true) {
   const task = yield fork(sampleData);
   
   // Make app work in background
-  if (isBg) yield call(AndroidForegroundService.initForegroundService);
+  if (isBg) yield call(AndroidForegroundService.startForegroundService);
 
   yield take(SamplesTypes.STOP_SAMPLE);
 
