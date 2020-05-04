@@ -4,6 +4,7 @@ import DataScreen from '../Containers/Data/DataScreen'
 import SplashScreen from '../Containers/SplashScreen/SplashScreen'
 import LoggingSamplesScreen from '../Containers/LoggingSamples/LoggingSamplesScreen'
 import WizardScreen from '../Containers/WizardScreen/WizardScreen'
+import ScanningScreen from '../Containers/ScanningScreen/ScanningScreen'
 
 /**
  * The root screen contains the application's navigation.
@@ -14,8 +15,8 @@ const StackNavigator = createStackNavigator(
   {
     // Create the application routes here (the key is the route name, the value is the target screen)
     SplashScreen: SplashScreen,
-    // Make main screen loggingSamples for now
-    MainScreen: LoggingSamplesScreen,
+    // Make main screen ScanningScreen!
+    MainScreen: ScanningScreen,
     WizardScreen,
     DataScreen,
     NoPermissionsScreen,
