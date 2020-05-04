@@ -1,5 +1,6 @@
 import React from 'react'
-import { Text, View, Image, Button } from 'react-native'
+import { Text, View, Image } from 'react-native'
+import Button from 'react-native-really-awesome-button/src/themes/rick';
 import { Helpers, Fonts, Images, Metrics } from '../Theme';
 
 export default function GrantPermissionBody(props) {
@@ -22,7 +23,7 @@ export default function GrantPermissionBody(props) {
           Fonts.h1,
           Metrics.bottomMargin
         ]}>
-          Scan Around!
+          זהירות קורונה!
         </Text>
         <Text style={[
           Fonts.h4,
@@ -34,8 +35,29 @@ export default function GrantPermissionBody(props) {
           }
         </Text>
       </View>
-      <Button title={btnTitle} onPress={btnAction}></Button>
-      <Image source={Images.NoLocationPermission}></Image>
+      <Button 
+        width={150}
+        onPress={btnAction}
+      >
+        {btnTitle}
+      </Button>
+      <Image source={Images.Location}></Image>
+      <View>
+        <Text style={[
+            Fonts.h4,
+            Helpers.textCenter,
+            Metrics.horizontalPadding
+          ]}>
+            תודה על שיתוף הפעולה.
+        </Text>
+        <Text style={[
+            Fonts.h4,
+            Helpers.textCenter,
+            Metrics.horizontalPadding
+          ]}>
+            אם נתקלתם בבאגים או כל בעיה, אנא דווחו לצוות באומן
+        </Text>
+      </View>
     </View>
   );
 }
