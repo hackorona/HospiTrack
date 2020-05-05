@@ -45,6 +45,18 @@ export function* sampleDataOnce() {
 
     const wifi = yield select(wifiListSelector);
     const gps = yield select(gpsLocationSelector);
+    const room_id = yield select(roomIdSelector);
+
+    // FIXME: This is an *ugly* fix to the mapping-app
+    // As server currently uses just one func for map and scan,
+    // the only difference is room_id ?= null.
+    // For making sure this app acts as mapping app only
+    // we don't allow sending to server a null room_id.
+    // WE DON'T LIKE THIS FIX AND WANT TO MAKE IT BETTER
+    // SB 05.05.20
+    if (!room_id) {
+      throw new Error('No ROOM_ID makes my roomy cry!');
+    }
 
     if (timeout) {
       console.log('timeout');
@@ -57,9 +69,7 @@ export function* sampleDataOnce() {
 
     const gpsDataForSample = yield call(gpsService.getGpsDataForSample, gps);
     const wifiDataForSample = yield call(wifiService.getWifiDataForSample, wifi);
-    const roomDataForSample = {
-      room_id: yield select(roomIdSelector)
-    };
+    const roomDataForSample = { room_id };
     const phoneDataForSample = yield call(phoneService.getPhoneDataForSample);
 
     const sample = {
